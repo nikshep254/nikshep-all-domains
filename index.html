@@ -437,6 +437,141 @@ footer{
 ::-webkit-scrollbar{width:4px}
 ::-webkit-scrollbar-track{background:var(--bg)}
 ::-webkit-scrollbar-thumb{background:var(--surface3);border-radius:4px}
+
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   ONEKO CAT CURSOR
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+#oneko{
+  position:fixed;
+  width:32px;height:32px;
+  image-rendering:pixelated;
+  z-index:99999;
+  pointer-events:auto;
+  cursor:pointer;
+  filter:drop-shadow(0 0 6px rgba(200,210,255,.35));
+  transition:filter .3s;
+}
+#oneko:hover{filter:drop-shadow(0 0 12px rgba(200,210,255,.6))}
+
+/* Variant picker floating button */
+#oneko-btn{
+  position:fixed;bottom:24px;right:24px;z-index:99998;
+  width:40px;height:40px;border-radius:50%;
+  background:rgba(255,255,255,.07);
+  border:1px solid rgba(255,255,255,.14);
+  backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
+  display:flex;align-items:center;justify-content:center;
+  cursor:pointer;font-size:18px;
+  transition:all .2s;
+  color:#aaa;
+}
+#oneko-btn:hover{background:rgba(255,255,255,.14);color:#fff;transform:scale(1.1)}
+
+/* Variant picker tray */
+#oneko-picker{
+  position:fixed;bottom:72px;right:24px;z-index:99997;
+  background:rgba(18,18,20,.92);
+  border:1px solid rgba(255,255,255,.12);
+  border-radius:16px;
+  padding:14px;
+  backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);
+  display:none;flex-direction:column;gap:8px;
+  min-width:160px;
+  box-shadow:0 24px 60px rgba(0,0,0,.7);
+  animation:fadeUp .2s ease both;
+}
+#oneko-picker.open{display:flex}
+.oneko-pick-row{
+  display:flex;align-items:center;gap:10px;
+  padding:8px 10px;border-radius:10px;
+  cursor:pointer;transition:background .15s;
+  font-size:13px;font-weight:500;color:#aaa;
+  letter-spacing:-.01em;
+}
+.oneko-pick-row:hover,.oneko-pick-row.active{background:rgba(255,255,255,.08);color:#fff}
+.oneko-pick-spr{
+  width:32px;height:32px;flex-shrink:0;
+  image-rendering:pixelated;
+  background-size:800%;
+}
+.oneko-pick-label{font-size:12px;color:inherit}
+
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   LIVE PREVIEW MODAL
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+#live-modal{
+  position:fixed;inset:0;z-index:99990;
+  background:rgba(0,0,0,.88);
+  backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);
+  display:none;flex-direction:column;
+  animation:fadeIn .25s ease;
+}
+#live-modal.open{display:flex}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+
+.live-bar{
+  flex-shrink:0;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:12px 20px;
+  border-bottom:1px solid rgba(255,255,255,.08);
+  background:rgba(10,10,12,.7);
+}
+.live-bar-left{display:flex;align-items:center;gap:10px}
+.live-dot{
+  width:8px;height:8px;border-radius:50%;
+  background:#30d158;
+  box-shadow:0 0 8px rgba(48,209,88,.7);
+  animation:pulse-live 2s ease infinite;
+}
+@keyframes pulse-live{0%,100%{opacity:1;box-shadow:0 0 8px rgba(48,209,88,.7)}50%{opacity:.6;box-shadow:0 0 4px rgba(48,209,88,.4)}}
+.live-title{font-size:14px;font-weight:600;color:#e8eaf0;letter-spacing:-.02em}
+.live-url{font-size:12px;color:#636366;letter-spacing:-.01em}
+.live-close{
+  width:32px;height:32px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  background:rgba(255,255,255,.07);border:none;
+  color:#aaa;font-size:18px;cursor:pointer;
+  transition:all .2s;line-height:1;
+}
+.live-close:hover{background:rgba(255,69,58,.25);color:#ff453a}
+.live-frame-wrap{flex:1;position:relative;overflow:hidden}
+.live-frame-wrap iframe{
+  width:100%;height:100%;border:none;
+  background:#000;
+}
+.live-spinner{
+  position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
+  flex-direction:column;gap:14px;
+  color:#636366;font-size:13px;font-weight:500;
+}
+.live-spin-ring{
+  width:36px;height:36px;border-radius:50%;
+  border:2px solid rgba(255,255,255,.08);
+  border-top-color:var(--blue);
+  animation:spin .8s linear infinite;
+}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+/* LIVE badge on card */
+.live-badge{
+  display:inline-flex;align-items:center;gap:5px;
+  font-size:10px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;
+  padding:3px 9px;border-radius:99px;
+  background:rgba(48,209,88,.15);color:#30d158;
+  border:1px solid rgba(48,209,88,.25);
+  cursor:pointer;transition:all .2s;flex-shrink:0;
+}
+.live-badge:hover{background:rgba(48,209,88,.28);transform:scale(1.05)}
+.live-badge-dot{width:5px;height:5px;border-radius:50%;background:#30d158;animation:pulse-live 1.8s infinite}
+
+/* Screenshot limitation notice */
+.ss-notice{
+  font-size:11px;color:#3d3d3f;
+  text-align:center;margin-top:10px;
+  letter-spacing:-.01em;
+  animation:fadeUp .5s 1.2s ease both;opacity:0;
+}
+.ss-notice a{color:#4d4d52;text-decoration:underline}
 </style>
 </head>
 <body>
@@ -656,7 +791,9 @@ function card(p,feat){
   a.className=cls;
   a.href=p.u;a.target="_blank";a.rel="noopener";
   a.setAttribute("data-g",p.g);
+  var isNik=p.u.indexOf("nikshep.vercel.app")!==-1;
   var fl=feat?'<span class="feat-label">Featured</span>':'';
+  var liveBadge=isNik?'<span class="live-badge" id="live-trigger"><span class="live-badge-dot"></span>Live</span>':'';
   a.innerHTML=fl+
     '<div class="thumb">'+
       '<span class="ico-ph">'+p.i+'</span>'+
@@ -667,7 +804,10 @@ function card(p,feat){
     '<div class="body">'+
       '<div class="row">'+
         '<span class="name">'+p.n+'</span>'+
+        '<div style="display:flex;gap:6px;align-items:center;flex-shrink:0">'+
+        (isNik?liveBadge:'')+
         '<span class="tag '+p.c+'">'+p.t+'</span>'+
+        '</div>'+
       '</div>'+
       '<p class="desc">'+p.d+'</p>'+
       '<p class="url">'+p.u.replace(/^https?:\/\//,"")+'</p>'+
@@ -733,6 +873,260 @@ MICRO.forEach(function(p){gm.appendChild(card(p,false))});
 
 /* footer fade */
 setTimeout(function(){document.querySelector("footer").style.opacity="1"},1000);
+
+/* Live preview trigger */
+document.addEventListener("click",function(e){
+  var t=e.target.closest("#live-trigger");
+  if(t){e.preventDefault();e.stopPropagation();openLive();}
+});
+
+/* Screenshot notice */
+var notice=document.createElement("p");
+notice.className="ss-notice";
+notice.innerHTML='Screenshots via <a href="https://microlink.io" target="_blank" rel="noopener">Microlink API</a> &mdash; free tier: 100 req/mo. May be slow or blank on first load.';
+document.querySelector(".section").parentNode.insertBefore(notice,document.querySelector(".section"));
+
+</script>
+
+<!-- ── Live Preview Modal ────────────────────────────── -->
+<div id="live-modal" role="dialog" aria-modal="true" aria-label="Live preview">
+  <div class="live-bar">
+    <div class="live-bar-left">
+      <span class="live-dot"></span>
+      <span class="live-title">nikshep.vercel.app</span>
+      <span class="live-url">Live Preview</span>
+    </div>
+    <button class="live-close" id="live-close" aria-label="Close">&#x2715;</button>
+  </div>
+  <div class="live-frame-wrap">
+    <div class="live-spinner" id="live-spinner">
+      <div class="live-spin-ring"></div>
+      Loading live site&hellip;
+    </div>
+    <iframe id="live-iframe" title="nikshep.vercel.app live" sandbox="allow-scripts allow-same-origin allow-forms allow-popups" loading="lazy"></iframe>
+  </div>
+</div>
+
+<!-- ── Oneko Variant Picker ──────────────────────────── -->
+<div id="oneko-picker" role="menu" aria-label="Choose your pet">
+  <div class="oneko-pick-row active" data-v="classic" role="menuitem" tabindex="0">
+    <div class="oneko-pick-spr" style="background-image:url('https://raw.githubusercontent.com/kyrie25/spicetify-oneko/main/assets/oneko/oneko-classic.gif');background-position:-96px -96px"></div>
+    <span class="oneko-pick-label">Classic</span>
+  </div>
+  <div class="oneko-pick-row" data-v="dog" role="menuitem" tabindex="0">
+    <div class="oneko-pick-spr" style="background-image:url('https://raw.githubusercontent.com/kyrie25/spicetify-oneko/main/assets/oneko/oneko-dog.gif');background-position:-96px -96px"></div>
+    <span class="oneko-pick-label">Dog</span>
+  </div>
+  <div class="oneko-pick-row" data-v="tora" role="menuitem" tabindex="0">
+    <div class="oneko-pick-spr" style="background-image:url('https://raw.githubusercontent.com/kyrie25/spicetify-oneko/main/assets/oneko/oneko-tora.gif');background-position:-96px -96px"></div>
+    <span class="oneko-pick-label">Tora</span>
+  </div>
+  <div class="oneko-pick-row" data-v="maia" role="menuitem" tabindex="0">
+    <div class="oneko-pick-spr" style="background-image:url('https://raw.githubusercontent.com/kyrie25/spicetify-oneko/main/assets/oneko/oneko-maia.gif');background-position:-96px -96px"></div>
+    <span class="oneko-pick-label">Maia</span>
+  </div>
+  <div class="oneko-pick-row" data-v="vaporwave" role="menuitem" tabindex="0">
+    <div class="oneko-pick-spr" style="background-image:url('https://raw.githubusercontent.com/kyrie25/spicetify-oneko/main/assets/oneko/oneko-vaporwave.gif');background-position:-96px -96px"></div>
+    <span class="oneko-pick-label">Vaporwave</span>
+  </div>
+</div>
+<button id="oneko-btn" title="Change pet variant" aria-label="Change cursor pet">🐱</button>
+<script>
+/* ══════════════════════════════════════════════════════════════
+   LIVE PREVIEW
+══════════════════════════════════════════════════════════════ */
+var liveModal=document.getElementById("live-modal");
+var liveIframe=document.getElementById("live-iframe");
+var liveSpinner=document.getElementById("live-spinner");
+document.getElementById("live-close").addEventListener("click",closeLive);
+liveModal.addEventListener("click",function(e){if(e.target===liveModal)closeLive()});
+document.addEventListener("keydown",function(e){if(e.key==="Escape")closeLive()});
+liveIframe.addEventListener("load",function(){liveSpinner.style.display="none"});
+
+function openLive(){
+  liveModal.classList.add("open");
+  liveSpinner.style.display="flex";
+  if(!liveIframe.src){liveIframe.src="https://nikshep.vercel.app/";}
+  document.body.style.overflow="hidden";
+}
+function closeLive(){
+  liveModal.classList.remove("open");
+  document.body.style.overflow="";
+}
+
+/* ══════════════════════════════════════════════════════════════
+   ONEKO — standalone (adapted from adryd325/oneko.js)
+   Strips Spicetify-specific APIs, keeps all cursor/pet logic
+══════════════════════════════════════════════════════════════ */
+(function(){
+  var GH="https://raw.githubusercontent.com/kyrie25/spicetify-oneko/main/assets/oneko/oneko-";
+
+  var el=document.createElement("div");
+  el.id="oneko";
+
+  var nekoPosX=64,nekoPosY=64,
+      mousePosX=0,mousePosY=0,
+      frameCount=0,idleTime=0,
+      idleAnimation=null,idleAnimationFrame=0,
+      forceSleep=false,grabbing=false,grabStop=true,nudge=false,
+      kuroNeko=false,
+      variant="classic";
+
+  /* Persist variant in sessionStorage (no localStorage in Claude env) */
+  try{var sv=sessionStorage.getItem("oneko:v");if(sv)variant=sv;}catch(e){}
+  try{var sk=sessionStorage.getItem("oneko:k");if(sk==="1")kuroNeko=true;}catch(e){}
+
+  var nekoSpeed=10;
+
+  var spriteSets={
+    idle:[[-3,-3]],alert:[[-7,-3]],
+    scratchSelf:[[-5,0],[-6,0],[-7,0]],
+    scratchWallN:[[0,0],[0,-1]],scratchWallS:[[-7,-1],[-6,-2]],
+    scratchWallE:[[-2,-2],[-2,-3]],scratchWallW:[[-4,0],[-4,-1]],
+    tired:[[-3,-2]],sleeping:[[-2,0],[-2,-1]],
+    N:[[-1,-2],[-1,-3]],NE:[[0,-2],[0,-3]],E:[[-3,0],[-3,-1]],
+    SE:[[-5,-1],[-5,-2]],S:[[-6,-3],[-7,-2]],SW:[[-5,-3],[-6,-1]],
+    W:[[-4,-2],[-4,-3]],NW:[[-1,0],[-1,-1]]
+  };
+
+  function applyVariant(){
+    el.style.backgroundImage="url('"+GH+variant+".gif')";
+    el.style.filter=kuroNeko?"invert(100%) drop-shadow(0 0 6px rgba(200,210,255,.35))":"drop-shadow(0 0 6px rgba(200,210,255,.35))";
+    try{sessionStorage.setItem("oneko:v",variant);}catch(e){}
+    try{sessionStorage.setItem("oneko:k",kuroNeko?"1":"0");}catch(e){}
+    /* Update picker active state */
+    document.querySelectorAll(".oneko-pick-row").forEach(function(r){
+      r.classList.toggle("active",r.dataset.v===variant);
+    });
+    /* Update picker button emoji */
+    var emojis={classic:"🐱",dog:"🐶",tora:"🐯",maia:"🐱",vaporwave:"🌸"};
+    document.getElementById("oneko-btn").textContent=emojis[variant]||"🐾";
+  }
+
+  function setSprite(name,frame){
+    var s=spriteSets[name][frame%spriteSets[name].length];
+    el.style.backgroundPosition=(s[0]*32)+"px "+(s[1]*32)+"px";
+  }
+
+  function resetIdle(){idleAnimation=null;idleAnimationFrame=0;}
+
+  function idle(){
+    idleTime+=1;
+    if(idleTime>10&&Math.floor(Math.random()*200)===0&&idleAnimation==null){
+      var opts=["sleeping","scratchSelf"];
+      if(nekoPosX<32)opts.push("scratchWallW");
+      if(nekoPosY<32)opts.push("scratchWallN");
+      if(nekoPosX>window.innerWidth-32)opts.push("scratchWallE");
+      if(nekoPosY>window.innerHeight-32)opts.push("scratchWallS");
+      idleAnimation=opts[Math.floor(Math.random()*opts.length)];
+    }
+    if(forceSleep){idleAnimation="sleeping";}
+    switch(idleAnimation){
+      case"sleeping":
+        if(idleAnimationFrame<8&&nudge&&forceSleep){setSprite("idle",0);break;}
+        else if(nudge){nudge=false;resetIdle();}
+        if(idleAnimationFrame<8){setSprite("tired",0);break;}
+        setSprite("sleeping",Math.floor(idleAnimationFrame/4));
+        if(idleAnimationFrame>192&&!forceSleep)resetIdle();
+        break;
+      case"scratchWallN":case"scratchWallS":case"scratchWallE":
+      case"scratchWallW":case"scratchSelf":
+        setSprite(idleAnimation,idleAnimationFrame);
+        if(idleAnimationFrame>9)resetIdle();
+        break;
+      default:setSprite("idle",0);return;
+    }
+    idleAnimationFrame+=1;
+  }
+
+  function frame(){
+    frameCount+=1;
+    if(grabbing){grabStop&&setSprite("alert",0);return;}
+    var dx=nekoPosX-mousePosX,dy=nekoPosY-mousePosY;
+    var dist=Math.sqrt(dx*dx+dy*dy);
+    if((dist<nekoSpeed||dist<48)&&!forceSleep){idle();return;}
+    idleAnimation=null;idleAnimationFrame=0;
+    if(idleTime>1){setSprite("alert",0);idleTime=Math.min(idleTime,7);idleTime-=1;return;}
+    var dir=dy/dist>0.5?"N":"";
+    dir+=dy/dist<-0.5?"S":"";
+    dir+=dx/dist>0.5?"W":"";
+    dir+=dx/dist<-0.5?"E":"";
+    setSprite(dir,frameCount);
+    nekoPosX-=(dx/dist)*nekoSpeed;
+    nekoPosY-=(dy/dist)*nekoSpeed;
+    nekoPosX=Math.min(Math.max(16,nekoPosX),window.innerWidth-16);
+    nekoPosY=Math.min(Math.max(16,nekoPosY),window.innerHeight-16);
+    el.style.left=(nekoPosX-16)+"px";
+    el.style.top=(nekoPosY-16)+"px";
+  }
+
+  /* Init element */
+  el.style.cssText="position:fixed;width:32px;height:32px;background-size:800%;z-index:99999;image-rendering:pixelated;cursor:pointer;left:"+(nekoPosX-16)+"px;top:"+(nekoPosY-16)+"px;";
+  applyVariant();
+  document.body.appendChild(el);
+
+  /* Mouse tracking */
+  window.addEventListener("mousemove",function(e){
+    if(!forceSleep){mousePosX=e.clientX;mousePosY=e.clientY;}
+  });
+
+  /* Touch tracking */
+  window.addEventListener("touchmove",function(e){
+    if(!forceSleep){mousePosX=e.touches[0].clientX;mousePosY=e.touches[0].clientY;}
+  },{passive:true});
+
+  /* Right-click → invert (kuro neko) */
+  el.addEventListener("contextmenu",function(e){
+    e.preventDefault();kuroNeko=!kuroNeko;applyVariant();
+  });
+
+  /* Double-click → sleep */
+  el.addEventListener("dblclick",function(){
+    forceSleep=!forceSleep;nudge=false;
+    if(!forceSleep)resetIdle();
+  });
+
+  /* Drag */
+  el.addEventListener("mousedown",function(e){
+    if(e.button!==0)return;
+    grabbing=true;
+    var sx=e.clientX,sy=e.clientY,snx=nekoPosX,sny=nekoPosY,gi;
+    var mm=function(e){
+      var ddx=e.clientX-sx,ddy=e.clientY-sy;
+      if(Math.abs(ddx)>Math.abs(ddy)&&Math.abs(ddx)>10)setSprite(ddx>0?"scratchWallW":"scratchWallE",frameCount);
+      else if(Math.abs(ddy)>Math.abs(ddx)&&Math.abs(ddy)>10)setSprite(ddy>0?"scratchWallN":"scratchWallS",frameCount);
+      if(grabStop||Math.abs(ddx)>10||Math.abs(ddy)>10){
+        grabStop=false;clearTimeout(gi);
+        gi=setTimeout(function(){grabStop=true;nudge=false;sx=e.clientX;sy=e.clientY;snx=nekoPosX;sny=nekoPosY;},150);
+      }
+      nekoPosX=snx+e.clientX-sx;nekoPosY=sny+e.clientY-sy;
+      el.style.left=(nekoPosX-16)+"px";el.style.top=(nekoPosY-16)+"px";
+    };
+    var mu=function(){
+      grabbing=false;nudge=true;resetIdle();
+      window.removeEventListener("mousemove",mm);
+      window.removeEventListener("mouseup",mu);
+    };
+    window.addEventListener("mousemove",mm);
+    window.addEventListener("mouseup",mu);
+  });
+
+  setInterval(frame,100);
+
+  /* Picker toggle */
+  var picker=document.getElementById("oneko-picker");
+  document.getElementById("oneko-btn").addEventListener("click",function(e){
+    e.stopPropagation();picker.classList.toggle("open");
+  });
+  document.addEventListener("click",function(e){
+    if(!picker.contains(e.target)&&e.target.id!=="oneko-btn")picker.classList.remove("open");
+  });
+  document.querySelectorAll(".oneko-pick-row").forEach(function(r){
+    r.addEventListener("click",function(){
+      variant=r.dataset.v;applyVariant();picker.classList.remove("open");
+    });
+  });
+})();
 </script>
 </body>
 </html>

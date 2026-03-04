@@ -1,1 +1,738 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Nikshep Doggalli — Everything I Ship</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet"/>
+<style>
+/* ── Reset ──────────────────────────────────────────────────── */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 
+/* ── Apple-grade design tokens ──────────────────────────────── */
+:root{
+  /* Backgrounds — true Apple dark */
+  --bg:#000;
+  --bg2:#0a0a0a;
+  --surface:#111;
+  --surface2:#1a1a1a;
+  --surface3:#222;
+  /* Borders */
+  --line:rgba(255,255,255,0.08);
+  --line2:rgba(255,255,255,0.14);
+  /* Text — Apple SF hierarchy */
+  --white:#fff;
+  --gray1:#f5f5f7;   /* Apple primary body */
+  --gray2:#a1a1a6;   /* Apple secondary */
+  --gray3:#6e6e73;   /* Apple tertiary */
+  --gray4:#3d3d3f;   /* Apple quaternary */
+  /* Apple system colours */
+  --blue:#2997ff;
+  --green:#30d158;
+  --red:#ff453a;
+  --orange:#ff9f0a;
+  --purple:#bf5af2;
+  --cyan:#64d2ff;
+  --pink:#ff375f;
+  --yellow:#ffd60a;
+  --teal:#5ac8fa;
+  --lime:#a3e635;
+  /* Font — exact Apple stack */
+  --font:-apple-system,BlinkMacSystemFont,"SF Pro Display","SF Pro Text","Helvetica Neue","Inter",Arial,sans-serif;
+  --r:22px;
+  --r-sm:14px;
+}
+
+html{scroll-behavior:smooth;font-size:16px}
+body{
+  font-family:var(--font);
+  background:var(--bg);
+  color:var(--gray1);
+  min-height:100vh;
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
+  overflow-x:hidden;
+  letter-spacing:-0.01em;
+}
+
+/* Subtle noise */
+body::after{
+  content:'';position:fixed;inset:0;pointer-events:none;z-index:9999;
+  opacity:.25;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.05'/%3E%3C/svg%3E");
+}
+
+/* Ambient glows */
+.glow{
+  position:fixed;inset:0;pointer-events:none;z-index:0;
+  background:
+    radial-gradient(ellipse 70vw 50vh at 8% 5%,  rgba(41,151,255,.06) 0%,transparent 65%),
+    radial-gradient(ellipse 55vw 45vh at 92% 85%, rgba(191,90,242,.05) 0%,transparent 65%),
+    radial-gradient(ellipse 60vw 40vh at 50% 110%,rgba(48,209,88,.04) 0%,transparent 65%);
+}
+
+/* ── Wrapper ─────────────────────────────────────────────────── */
+.wrap{position:relative;z-index:1;max-width:1040px;margin:0 auto;padding:0 24px 100px}
+
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   HERO — Apple Titanium cinematic
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+.hero{
+  position:relative;
+  padding:100px 0 76px;
+  text-align:center;
+  overflow:visible;
+  isolation:isolate;
+}
+/* Smoke canvas lives behind everything */
+#smoke-canvas{
+  position:absolute;
+  left:50%;top:0;
+  transform:translateX(-50%);
+  width:900px;max-width:100vw;height:100%;
+  pointer-events:none;
+  z-index:0;
+  opacity:1;
+}
+.hero > *:not(#smoke-canvas){position:relative;z-index:1}
+
+/* Radial glow behind headline — titanium core light */
+.hero::before{
+  content:'';
+  position:absolute;
+  left:50%;top:38%;
+  transform:translate(-50%,-50%);
+  width:640px;height:280px;
+  background:radial-gradient(ellipse at center,
+    rgba(180,185,200,.09) 0%,
+    rgba(100,120,160,.05) 40%,
+    transparent 72%);
+  pointer-events:none;z-index:0;
+  filter:blur(18px);
+}
+
+.hero-eyebrow{
+  font-size:12px;
+  font-weight:600;
+  letter-spacing:.1em;
+  text-transform:uppercase;
+  color:rgba(180,185,205,.7);
+  margin-bottom:18px;
+  display:block;
+  animation:fadeUp .8s .1s ease both;
+}
+
+.hero-title{
+  font-size:clamp(46px,8.5vw,92px);
+  font-weight:800;
+  letter-spacing:-0.045em;
+  line-height:1.02;
+  color:#f0f0f5;
+  margin-bottom:10px;
+  animation:fadeUp .7s .2s ease both;
+  /* Titanium text shadow — very subtle */
+  text-shadow:0 0 80px rgba(160,170,200,.15);
+}
+
+/* Static "Building" word — pure white */
+.hero-title .static-word{color:#fff}
+
+/* Typewriter container */
+.tw-wrap{
+  display:block;
+  min-height:1.15em;
+  animation:fadeUp .7s .35s ease both;
+}
+
+/* Titanium shimmer on typewriter text */
+.tw{
+  background:linear-gradient(
+    105deg,
+    #8a8f9e 0%,
+    #c8cad6 18%,
+    #ffffff 30%,
+    #dde0ec 42%,
+    #9a9fae 55%,
+    #e8eaf5 68%,
+    #ffffff 78%,
+    #b0b4c4 90%,
+    #8a8f9e 100%
+  );
+  background-size:220% 100%;
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+  background-clip:text;
+  animation:titanium-sweep 3.6s ease-in-out infinite;
+}
+@keyframes titanium-sweep{
+  0%  {background-position:220% 0}
+  60% {background-position:0%   0}
+  100%{background-position:0%   0}
+}
+
+/* Cursor — thin, titanium-silver */
+.tw-cursor{
+  display:inline-block;
+  width:2.5px;
+  height:.82em;
+  background:linear-gradient(180deg,rgba(255,255,255,.9),rgba(180,190,215,.5));
+  margin-left:4px;
+  vertical-align:middle;
+  border-radius:2px;
+  animation:blink-ti 1.1s ease-in-out infinite;
+  -webkit-text-fill-color:initial;
+  box-shadow:0 0 8px rgba(200,210,255,.4);
+}
+@keyframes blink-ti{
+  0%,45%{opacity:1}
+  55%,100%{opacity:0}
+}
+
+.hero-sub{
+  font-size:clamp(15px,2vw,19px);
+  font-weight:400;
+  color:#8a8d9a;
+  line-height:1.6;
+  max-width:520px;
+  margin:22px auto 34px;
+  letter-spacing:-0.01em;
+  animation:fadeUp .7s .55s ease both;
+}
+.hero-sub strong{color:#c8cad2;font-weight:600}
+.hero-sub a{color:#4da6ff!important;text-decoration:none}
+
+/* Portfolio CTA */
+.hero-cta{
+  display:inline-flex;align-items:center;gap:8px;
+  padding:11px 24px;
+  background:rgba(255,255,255,.07);
+  border:1px solid rgba(255,255,255,.14);
+  backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
+  color:#e8eaf0;
+  font-size:15px;font-weight:600;letter-spacing:-0.01em;
+  border-radius:99px;
+  text-decoration:none;
+  transition:all .25s;
+  margin-bottom:22px;
+  animation:fadeUp .7s .65s ease both;
+}
+.hero-cta:hover{
+  background:rgba(255,255,255,.13);
+  border-color:rgba(255,255,255,.25);
+  color:#fff;
+  transform:scale(1.03);
+}
+.hero-cta svg{width:15px;height:15px;flex-shrink:0}
+
+.hero-pills{
+  display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:4px;
+  animation:fadeUp .7s .75s ease both;
+}
+.pill{
+  display:inline-flex;align-items:center;gap:7px;
+  padding:8px 16px;border-radius:99px;
+  border:1px solid var(--line2);background:var(--surface);
+  font-size:13px;font-weight:500;color:var(--gray2);
+  text-decoration:none;transition:all .2s;letter-spacing:-.01em;
+}
+.pill:hover{background:var(--surface2);color:var(--white);border-color:rgba(255,255,255,.2);transform:translateY(-1px)}
+.pill svg{width:14px;height:14px;flex-shrink:0}
+
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   SECTION HEADERS — Apple "eyebrow" style
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+.section{margin-top:64px}
+
+.section-head{
+  display:flex;align-items:baseline;justify-content:space-between;
+  margin-bottom:20px;
+  padding-bottom:14px;
+  border-bottom:1px solid var(--line);
+}
+
+.section-title{
+  font-size:22px;
+  font-weight:700;
+  letter-spacing:-0.03em;
+  color:var(--white);
+}
+
+.section-count{
+  font-size:13px;font-weight:500;
+  color:var(--gray3);letter-spacing:-.01em;
+}
+
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   BENTO GRID
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+@media(max-width:700px){.grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:420px){.grid{grid-template-columns:1fr}}
+.span2{grid-column:span 2}
+
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   CARD — iOS app card aesthetic
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+.card{
+  display:flex;flex-direction:column;
+  background:var(--surface);
+  border:1px solid var(--line);
+  border-radius:var(--r);
+  overflow:hidden;
+  text-decoration:none;color:inherit;
+  transition:transform .22s cubic-bezier(.34,1.56,.64,1), box-shadow .22s ease, border-color .2s;
+  animation:fadeUp .5s ease both;
+  position:relative;
+}
+.card:hover{
+  transform:translateY(-4px) scale(1.009);
+  border-color:var(--line2);
+}
+
+/* Featured cards — slightly different bg */
+.card-feat{background:var(--bg2)}
+
+/* Stagger animations */
+.card:nth-child(1){animation-delay:.04s}.card:nth-child(2){animation-delay:.08s}
+.card:nth-child(3){animation-delay:.12s}.card:nth-child(4){animation-delay:.16s}
+.card:nth-child(5){animation-delay:.20s}.card:nth-child(6){animation-delay:.24s}
+.card:nth-child(7){animation-delay:.28s}.card:nth-child(8){animation-delay:.32s}
+.card:nth-child(9){animation-delay:.36s}.card:nth-child(10){animation-delay:.40s}
+.card:nth-child(11){animation-delay:.44s}.card:nth-child(12){animation-delay:.48s}
+.card:nth-child(13){animation-delay:.52s}.card:nth-child(14){animation-delay:.56s}
+
+/* Per-colour hover glows */
+[data-g=blue]:hover   {box-shadow:0 28px 70px rgba(0,0,0,.6),0 0 0 1px rgba(41,151,255,.35)}
+[data-g=green]:hover  {box-shadow:0 28px 70px rgba(0,0,0,.6),0 0 0 1px rgba(48,209,88,.35)}
+[data-g=purple]:hover {box-shadow:0 28px 70px rgba(0,0,0,.6),0 0 0 1px rgba(191,90,242,.35)}
+[data-g=orange]:hover {box-shadow:0 28px 70px rgba(0,0,0,.6),0 0 0 1px rgba(255,159,10,.35)}
+[data-g=red]:hover    {box-shadow:0 28px 70px rgba(0,0,0,.6),0 0 0 1px rgba(255,69,58,.35)}
+[data-g=cyan]:hover   {box-shadow:0 28px 70px rgba(0,0,0,.6),0 0 0 1px rgba(100,210,255,.35)}
+[data-g=pink]:hover   {box-shadow:0 28px 70px rgba(0,0,0,.6),0 0 0 1px rgba(255,55,95,.35)}
+[data-g=yellow]:hover {box-shadow:0 28px 70px rgba(0,0,0,.6),0 0 0 1px rgba(255,214,10,.35)}
+[data-g=teal]:hover   {box-shadow:0 28px 70px rgba(0,0,0,.6),0 0 0 1px rgba(90,200,250,.35)}
+[data-g=lime]:hover   {box-shadow:0 28px 70px rgba(0,0,0,.6),0 0 0 1px rgba(163,230,53,.35)}
+
+/* ── Screenshot ── */
+.thumb{
+  width:100%;aspect-ratio:16/9;
+  background:var(--surface2);
+  overflow:hidden;position:relative;flex-shrink:0;
+}
+/* Featured thumb taller */
+.card-feat .thumb{aspect-ratio:16/8}
+
+.thumb::before{
+  content:'';position:absolute;inset:0;z-index:1;pointer-events:none;
+  background:linear-gradient(90deg,transparent,rgba(255,255,255,.03) 50%,transparent);
+  background-size:200% 100%;animation:shim 2s infinite;
+}
+.thumb::after{
+  content:'';position:absolute;inset:0;pointer-events:none;
+  background:linear-gradient(180deg,transparent 50%,rgba(0,0,0,.45) 100%);
+}
+.thumb img{
+  width:100%;height:100%;object-fit:cover;object-position:top;
+  display:block;opacity:0;transition:opacity .4s ease,transform .5s ease;
+}
+.card:hover .thumb img{transform:scale(1.05)}
+.ico-ph{
+  position:absolute;inset:0;display:flex;align-items:center;
+  justify-content:center;font-size:32px;opacity:.15;user-select:none;z-index:0;
+}
+
+/* ── Card body — Apple SF typography ── */
+.body{
+  padding:16px 18px 18px;
+  flex:1;display:flex;flex-direction:column;gap:6px;
+}
+.card-feat .body{padding:20px 22px 22px}
+
+.row{display:flex;align-items:center;justify-content:space-between;gap:10px}
+
+/* Title — SF Pro Bold */
+.name{
+  font-size:15px;font-weight:700;
+  color:var(--white);letter-spacing:-0.02em;
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+  line-height:1.2;
+}
+.card-feat .name{font-size:18px;font-weight:800;letter-spacing:-0.03em}
+
+/* Tag — Apple capsule */
+.tag{
+  font-size:10px;font-weight:700;
+  letter-spacing:.04em;text-transform:uppercase;
+  padding:4px 9px;border-radius:99px;
+  flex-shrink:0;white-space:nowrap;line-height:1.2;
+}
+
+/* Desc — SF Pro Regular */
+.desc{
+  font-size:12.5px;font-weight:400;
+  color:var(--gray2);line-height:1.55;
+  letter-spacing:-0.005em;
+}
+.card-feat .desc{font-size:14px;line-height:1.6}
+
+.url{
+  font-size:11px;font-weight:500;
+  color:var(--gray3);margin-top:auto;padding-top:6px;
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+  letter-spacing:-.01em;
+}
+
+/* Tag colour variants */
+.c-blue  {background:rgba(41,151,255,.15); color:#2997ff}
+.c-green {background:rgba(48,209,88,.15);  color:#30d158}
+.c-red   {background:rgba(255,69,58,.15);  color:#ff453a}
+.c-purple{background:rgba(191,90,242,.15); color:#bf5af2}
+.c-orange{background:rgba(255,159,10,.15); color:#ff9f0a}
+.c-cyan  {background:rgba(100,210,255,.15);color:#64d2ff}
+.c-pink  {background:rgba(255,55,95,.15);  color:#ff375f}
+.c-yellow{background:rgba(255,214,10,.15); color:#ffd60a}
+.c-teal  {background:rgba(90,200,250,.15); color:#5ac8fa}
+.c-lime  {background:rgba(163,230,53,.15); color:#a3e635}
+
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   FEATURED LABEL STRIP (top of featured cards)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+.feat-label{
+  position:absolute;top:14px;left:14px;z-index:10;
+  font-size:10px;font-weight:700;letter-spacing:.06em;
+  text-transform:uppercase;
+  padding:4px 10px;border-radius:99px;
+  background:rgba(0,0,0,.55);
+  backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);
+  border:1px solid rgba(255,255,255,.12);
+  color:rgba(255,255,255,.85);
+}
+
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   FOOTER
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+footer{
+  margin-top:72px;padding-top:28px;
+  border-top:1px solid var(--line);
+  display:flex;align-items:center;justify-content:space-between;
+  gap:14px;flex-wrap:wrap;
+  animation:fadeUp .5s .8s ease both;opacity:0;
+}
+.foot-name{font-size:13px;font-weight:600;color:var(--gray2);letter-spacing:-.01em}
+.foot-name strong{color:var(--white);font-weight:800}
+.foot-links{display:flex;gap:20px}
+.foot-links a{font-size:12px;font-weight:500;color:var(--gray3);text-decoration:none;transition:color .2s;letter-spacing:-.01em}
+.foot-links a:hover{color:var(--gray2)}
+
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   ANIMATIONS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+@keyframes fadeUp{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:0}}
+@keyframes shim{0%{background-position:-200% 0}100%{background-position:200% 0}}
+
+/* Scrollbar — Apple style minimal */
+::-webkit-scrollbar{width:4px}
+::-webkit-scrollbar-track{background:var(--bg)}
+::-webkit-scrollbar-thumb{background:var(--surface3);border-radius:4px}
+</style>
+</head>
+<body>
+<div class="glow"></div>
+<div class="wrap">
+
+<!-- ══════════════════════════════════════════════
+     HERO
+══════════════════════════════════════════════ -->
+<section class="hero">
+  <canvas id="smoke-canvas" aria-hidden="true"></canvas>
+  <span class="hero-eyebrow">Nikshep Doggalli &nbsp;·&nbsp; Builder &amp; Designer</span>
+  <h1 class="hero-title">
+    <span class="static-word">Building</span><br>
+    <span class="tw-wrap">
+      <span class="tw" id="tw"></span><span class="tw-cursor"></span>
+    </span>
+  </h1>
+  <p class="hero-sub">
+    Shipping fast, learning faster. &nbsp;TypeScript · React · Next.js<br>
+    Full portfolio at <strong><a href="https://nikshep.vercel.app" target="_blank" rel="noopener">nikshep.vercel.app</a></strong>
+  </p>
+  <a class="hero-cta" href="https://nikshep.vercel.app" target="_blank" rel="noopener">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 1 0 20 14.5 14.5 0 0 1 0-20"/><line x1="2" y1="12" x2="22" y2="12"/></svg>
+    Visit Portfolio
+  </a>
+  <div class="hero-pills">
+    <a class="pill" href="https://instagram.com/nikkk.exe" target="_blank" rel="noopener">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>
+      @nikkk.exe
+    </a>
+    <a class="pill" href="http://nikshep.xo.je" target="_blank" rel="noopener">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
+      All Links
+    </a>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════
+     VERCEL PROJECTS — FEATURED FIRST
+══════════════════════════════════════════════ -->
+<section class="section">
+  <div class="section-head">
+    <span class="section-title">Featured Projects</span>
+    <span class="section-count">Vercel · 7 projects</span>
+  </div>
+  <div class="grid" id="grid-vercel"></div>
+</section>
+
+<!-- ══════════════════════════════════════════════
+     MICRO LINKS
+══════════════════════════════════════════════ -->
+<section class="section">
+  <div class="section-head">
+    <span class="section-title">Micro Projects &amp; Links</span>
+    <span class="section-count">12 links</span>
+  </div>
+  <div class="grid" id="grid-micro"></div>
+</section>
+
+<!-- ══════════════════════════════════════════════
+     FOOTER
+══════════════════════════════════════════════ -->
+<footer>
+  <p class="foot-name">Made by <strong>Nikshep Doggalli</strong></p>
+  <div class="foot-links">
+    <a href="https://instagram.com/nikkk.exe" target="_blank" rel="noopener">Instagram</a>
+    <a href="https://nikshep.vercel.app" target="_blank" rel="noopener">Portfolio</a>
+    <a href="http://nikshep.xo.je" target="_blank" rel="noopener">nikshep.xo.je</a>
+  </div>
+</footer>
+
+</div><!-- /wrap -->
+
+<script>
+/* ══════════════════════════════════════════════════════════════
+   TYPEWRITER
+══════════════════════════════════════════════════════════════ */
+var words=["things that matter.","web apps.","in public.","with purpose.","fast.","tools people use.","the future.","experiences."];
+var el=document.getElementById("tw"),wi=0,ci=0,deleting=false,pauseFrames=0;
+function tick(){
+  if(pauseFrames>0){pauseFrames--;setTimeout(tick,90);return}
+  var w=words[wi];
+  if(!deleting){
+    ci++;el.textContent=w.slice(0,ci);
+    if(ci===w.length){deleting=true;pauseFrames=32}
+    setTimeout(tick,58);
+  } else {
+    ci--;el.textContent=w.slice(0,ci);
+    if(ci===0){deleting=false;wi=(wi+1)%words.length;pauseFrames=8}
+    setTimeout(tick,28);
+  }
+}
+tick();
+
+/* ══════════════════════════════════════════════════════════════
+   SMOKE / MIST ENGINE — Apple Titanium reveal
+   Canvas sits behind the hero, particles rise from text baseline
+══════════════════════════════════════════════════════════════ */
+(function(){
+  var cv=document.getElementById("smoke-canvas");
+  if(!cv)return;
+  var ctx=cv.getContext("2d");
+
+  /* Size canvas to hero section */
+  function resize(){
+    var hero=cv.parentElement;
+    cv.width=hero.offsetWidth;
+    cv.height=hero.offsetHeight;
+  }
+  resize();
+  window.addEventListener("resize",function(){resize()});
+
+  /* Particle pool */
+  var particles=[];
+  var MAX=55;
+
+  function Particle(){
+    this.reset(true);
+  }
+  Particle.prototype.reset=function(init){
+    var cx=cv.width/2;
+    /* Spread along text baseline area — centre-weighted */
+    this.x = cx + (Math.random()-0.5)*420;
+    /* Start from roughly the headline baseline (65% down the hero) */
+    this.y = cv.height * 0.62 + (Math.random()-0.5)*40;
+    /* Subtle horizontal drift */
+    this.vx = (Math.random()-0.5)*0.22;
+    /* Upward drift — slow */
+    this.vy = -(0.28 + Math.random()*0.32);
+    /* Radius grows as it rises */
+    this.r  = 18 + Math.random()*32;
+    this.maxR = this.r + 30 + Math.random()*60;
+    /* Opacity lifecycle */
+    this.life = 0;
+    this.maxLife = 130 + Math.random()*130;
+    /* Init — scatter so screen doesn't pop in empty */
+    if(init){ this.life = Math.random()*this.maxLife; }
+    /* Colour — titanium: cool silver-white with rare warm hint */
+    var warm = Math.random()<0.15;
+    if(warm){
+      this.r0=220;this.g0=215;this.b0=205;
+    } else {
+      this.r0=200+Math.round(Math.random()*30);
+      this.g0=205+Math.round(Math.random()*25);
+      this.b0=220+Math.round(Math.random()*25);
+    }
+    /* Rotation for turbulence */
+    this.angle  = Math.random()*Math.PI*2;
+    this.angV   = (Math.random()-0.5)*0.006;
+    this.wobble = (Math.random()-0.5)*0.012;
+  };
+  Particle.prototype.update=function(){
+    this.life++;
+    this.x  += this.vx + Math.sin(this.angle)*0.18;
+    this.y  += this.vy;
+    this.r  += 0.12;
+    this.vx += this.wobble;
+    this.angle += this.angV;
+    /* Slow natural deceleration upward */
+    this.vy *= 0.9985;
+  };
+  Particle.prototype.opacity=function(){
+    var t=this.life/this.maxLife;
+    /* Ease in quickly, long plateau, ease out */
+    if(t<0.12) return (t/0.12)*0.32;
+    if(t>0.72) return ((1-t)/0.28)*0.32;
+    return 0.32;
+  };
+  Particle.prototype.draw=function(){
+    var op=this.opacity();
+    if(op<=0)return;
+    var gr=ctx.createRadialGradient(this.x,this.y,0,this.x,this.y,this.r);
+    gr.addColorStop(0,  "rgba("+this.r0+","+this.g0+","+this.b0+","+op+")");
+    gr.addColorStop(0.5,"rgba("+this.r0+","+this.g0+","+this.b0+","+(op*0.4)+")");
+    gr.addColorStop(1,  "rgba("+this.r0+","+this.g0+","+this.b0+",0)");
+    ctx.beginPath();
+    ctx.arc(this.x,this.y,this.r,0,Math.PI*2);
+    ctx.fillStyle=gr;
+    ctx.fill();
+  };
+
+  /* Spawn initial pool */
+  for(var i=0;i<MAX;i++) particles.push(new Particle());
+
+  /* Emitter — trickle new particles */
+  var lastEmit=0;
+  function loop(ts){
+    ctx.clearRect(0,0,cv.width,cv.height);
+    /* Spawn ~1 particle every 220ms */
+    if(ts-lastEmit>220 && particles.length<MAX+10){
+      var p=new Particle();
+      p.life=0;
+      particles.push(p);
+      lastEmit=ts;
+    }
+    for(var i=particles.length-1;i>=0;i--){
+      var p=particles[i];
+      p.update();
+      p.draw();
+      if(p.life>=p.maxLife){ p.reset(false); }
+    }
+    requestAnimationFrame(loop);
+  }
+  requestAnimationFrame(loop);
+})();
+
+/* ── Screenshot via Microlink ─────────────────────────── */
+function ss(u){
+  return"https://api.microlink.io/?url="+encodeURIComponent(u)+"&screenshot=true&meta=false&embed=screenshot.url&type=jpeg&overlay.browser=dark&viewport.width=1280&viewport.height=800";
+}
+
+/* ── Build card ───────────────────────────────────────── */
+function card(p,feat){
+  var a=document.createElement("a");
+  var cls="card"+(p.w?" span2":"")+(feat?" card-feat":"");
+  a.className=cls;
+  a.href=p.u;a.target="_blank";a.rel="noopener";
+  a.setAttribute("data-g",p.g);
+  var fl=feat?'<span class="feat-label">Featured</span>':'';
+  a.innerHTML=fl+
+    '<div class="thumb">'+
+      '<span class="ico-ph">'+p.i+'</span>'+
+      '<img src="'+ss(p.u)+'" alt="'+p.n+'" loading="lazy"'+
+      ' onerror="this.style.display=\'none\'"'+
+      ' onload="this.style.opacity=\'1\';this.closest(\'.thumb\').querySelector(\'.ico-ph\').style.display=\'none\'"/>'+
+    '</div>'+
+    '<div class="body">'+
+      '<div class="row">'+
+        '<span class="name">'+p.n+'</span>'+
+        '<span class="tag '+p.c+'">'+p.t+'</span>'+
+      '</div>'+
+      '<p class="desc">'+p.d+'</p>'+
+      '<p class="url">'+p.u.replace(/^https?:\/\//,"")+'</p>'+
+    '</div>';
+  return a;
+}
+
+/* ── Vercel projects (prominence order) ──────────────── */
+var VERCEL=[
+  // ── Row 1: nikshep portfolio (wide=featured) + entropyzero
+  {u:"https://nikshep.vercel.app/",       n:"Nikshep — Portfolio",  t:"Portfolio",      c:"c-blue",  g:"blue",  w:1, feat:true,
+   d:"Interactive portfolio by Nikshep Doggalli. TypeScript, React, Next.js, Three.js. Showcasing projects, experience, and everything built.",i:"⚡"},
+  {u:"https://entropyzero.vercel.app/",   n:"EntropyZero",          t:"Experiment",     c:"c-lime",  g:"lime",  w:0, feat:true,
+   d:"A zero-entropy experiment — ordered chaos, minimal interactions, and the quiet beauty of systems at their stillest point.",i:"🌀"},
+  // ── Row 2: rupeerewind (wide) + instagen
+  {u:"https://rupeerewind.vercel.app/",   n:"RupeeRewind",          t:"Finance · India",c:"c-green", g:"green", w:1, feat:true,
+   d:"Salary inflation calculator for India. Enter your past salary, see its real value today. Built for every working Indian who wonders where their money went.",i:"💸"},
+  {u:"https://instagen-hyperdesi.vercel.app/",n:"InstaGen",         t:"AI · Bio",       c:"c-purple",g:"purple",w:0, feat:true,
+   d:"AI-powered Instagram bio generator. Describe yourself, pick a vibe, walk away with a bio that sounds exactly like you.",i:"✍️"},
+  // ── Row 3: remaining vercel
+  {u:"https://kairosflow.vercel.app/",    n:"KairosFlow",           t:"Time · AI",      c:"c-teal",  g:"teal",  w:0, feat:false,
+   d:"Feel every hour, day, month, and year slipping away — live. AI-generated wisdom keeps you anchored to the present moment.",i:"⏱"},
+  {u:"https://chailink.vercel.app/",      n:"ChaiLink",             t:"URL Shortener",  c:"c-yellow",g:"yellow",w:0, feat:false,
+   d:"Warm, no-fuss URL shortener. Paste a long link, get a short one, share it over chai.",i:"🔗"},
+  {u:"https://suhansushanth.vercel.app/", n:"DJ Suhan",             t:"Music · DJ",     c:"c-red",   g:"red",   w:0, feat:false,
+   d:"Suhan Sushanth — Mysore-based DJ, 18 years old, 100+ shows. Tech house, Bollywood, hip-hop, open format.",i:"🎧"},
+];
+
+/* ── Micro / xo.je projects ──────────────────────────── */
+var MICRO=[
+  {u:"https://lifetracker.likesyou.org/?i=1",n:"LifeTracker",       t:"Productivity",c:"c-green", g:"green", w:1,
+   d:"All-in-one habit and goal tracker — your entire life on a single live dashboard.",i:"📊"},
+  {u:"https://sushmarudraswamy.is-great.net/?i=1",n:"Sushma Rudraswamy",t:"Portfolio",c:"c-purple",g:"purple",w:0,
+   d:"Personal portfolio showcasing work, story, and achievements — built to leave an impression.",i:"🎨"},
+  {u:"http://roastgram.gamer.gd/",            n:"RoastGram",         t:"Fun · AI",  c:"c-red",   g:"red",   w:0,
+   d:"Drop any Instagram handle. Gemini AI roasts their profile — sharp, sarcastic, built for laughs.",i:"🔥"},
+  {u:"http://backyarddevs.xo.je/",            n:"Backyard Devs",     t:"Community", c:"c-blue",  g:"blue",  w:1,
+   d:"Hub for indie devs shipping side projects. Build in public, iterate fast, ship together.",i:"🏡"},
+  {u:"http://copium.xo.je/",                  n:"Copium",            t:"Meme · Tool",c:"c-orange",g:"orange",w:0,
+   d:"Digital copium. For the moments when reality hits hard and you just need some hopeful delusion.",i:"💊"},
+  {u:"http://copiumai.xo.je/",                n:"CopiumAI",          t:"AI · Tool", c:"c-purple",g:"purple",w:0,
+   d:"AI-generated rationalizations and silver linings on demand. Never run out of cope.",i:"🤖"},
+  {u:"http://linkchai.xo.je/",                n:"LinkChai",          t:"Links",     c:"c-yellow",g:"yellow",w:0,
+   d:"Share and discover links over a warm digital chai. Good vibes, strong curation.",i:"☕"},
+  {u:"http://faahhh.xo.je/",                  n:"Faahhh",            t:"Experiment",c:"c-pink",  g:"pink",  w:0,
+   d:"Expressive, weird, oddly satisfying. An experimental micro-app for when words fail.",i:"😮"},
+  {u:"http://demobulids.xo.je/",              n:"Demo Builds",       t:"Showcase",  c:"c-cyan",  g:"cyan",  w:0,
+   d:"Early-stage builds and raw experiments. Rough around the edges, packed with potential.",i:"🧪"},
+  {u:"http://demoprelaunch.xo.je/",           n:"Pre-Launch Demo",   t:"Pre-Launch",c:"c-green", g:"green", w:0,
+   d:"Sneak peeks of upcoming products — get in before anyone else.",i:"🚀"},
+  {u:"http://nikshep.xo.je/",                 n:"Nikshep",           t:"Personal",  c:"c-blue",  g:"blue",  w:0,
+   d:"Personal hub — projects, contact, and everything between the ideas and the ships.",i:"👤"},
+  {u:"http://nikkiapi.xo.je/",                n:"NikkiAPI",          t:"API",       c:"c-cyan",  g:"cyan",  w:0,
+   d:"Lightweight public API with handy endpoints to power your next little project.",i:"🔌"},
+];
+
+/* ── Render ──────────────────────────────────────────── */
+var gv=document.getElementById("grid-vercel");
+VERCEL.forEach(function(p){gv.appendChild(card(p,p.feat))});
+
+var gm=document.getElementById("grid-micro");
+MICRO.forEach(function(p){gm.appendChild(card(p,false))});
+
+/* footer fade */
+setTimeout(function(){document.querySelector("footer").style.opacity="1"},1000);
+</script>
+</body>
+</html>

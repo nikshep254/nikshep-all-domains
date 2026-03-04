@@ -370,14 +370,6 @@ footer{margin-top:72px;padding-top:28px;border-top:1px solid var(--line);display
 /* ━━━ ONEKO ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
 #oneko{position:fixed;width:32px;height:32px;image-rendering:pixelated;z-index:99999;pointer-events:auto;cursor:pointer;filter:drop-shadow(0 0 6px rgba(200,210,255,.35));transition:filter .3s}
 #oneko:hover{filter:drop-shadow(0 0 12px rgba(200,210,255,.6))}
-#oneko-btn{position:fixed;bottom:24px;right:24px;z-index:99998;width:40px;height:40px;border-radius:50%;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.14);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:18px;transition:all .2s;color:#aaa}
-#oneko-btn:hover{background:rgba(255,255,255,.14);color:#fff;transform:scale(1.1)}
-#oneko-picker{position:fixed;bottom:72px;right:24px;z-index:99997;background:rgba(18,18,20,.92);border:1px solid rgba(255,255,255,.12);border-radius:16px;padding:14px;backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);display:none;flex-direction:column;gap:8px;min-width:160px;box-shadow:0 24px 60px rgba(0,0,0,.7);animation:fadeUp .2s ease both}
-#oneko-picker.open{display:flex}
-.oneko-pick-row{display:flex;align-items:center;gap:10px;padding:8px 10px;border-radius:10px;cursor:pointer;transition:background .15s;font-size:13px;font-weight:500;color:#aaa;letter-spacing:-.01em}
-.oneko-pick-row:hover,.oneko-pick-row.active{background:rgba(255,255,255,.08);color:#fff}
-.oneko-pick-spr{width:32px;height:32px;flex-shrink:0;image-rendering:pixelated;background-size:800%}
-.oneko-pick-label{font-size:12px;color:inherit}
 
 /* ━━━ ANIMATIONS ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
 @keyframes fadeUp{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
@@ -552,31 +544,6 @@ footer{margin-top:72px;padding-top:28px;border-top:1px solid var(--line);display
     <iframe id="live-iframe" title="nikshep.vercel.app" sandbox="allow-scripts allow-same-origin allow-forms allow-popups" loading="lazy"></iframe>
   </div>
 </div>
-
-<!-- ONEKO PICKER -->
-<div id="oneko-picker" role="menu">
-  <div class="oneko-pick-row active" data-v="classic" role="menuitem" tabindex="0">
-    <div class="oneko-pick-spr" style="background-image:url('https://raw.githubusercontent.com/kyrie25/spicetify-oneko/main/assets/oneko/oneko-classic.gif');background-position:-96px -96px"></div>
-    <span class="oneko-pick-label">Classic</span>
-  </div>
-  <div class="oneko-pick-row" data-v="dog" role="menuitem" tabindex="0">
-    <div class="oneko-pick-spr" style="background-image:url('https://raw.githubusercontent.com/kyrie25/spicetify-oneko/main/assets/oneko/oneko-dog.gif');background-position:-96px -96px"></div>
-    <span class="oneko-pick-label">Dog</span>
-  </div>
-  <div class="oneko-pick-row" data-v="tora" role="menuitem" tabindex="0">
-    <div class="oneko-pick-spr" style="background-image:url('https://raw.githubusercontent.com/kyrie25/spicetify-oneko/main/assets/oneko/oneko-tora.gif');background-position:-96px -96px"></div>
-    <span class="oneko-pick-label">Tora</span>
-  </div>
-  <div class="oneko-pick-row" data-v="maia" role="menuitem" tabindex="0">
-    <div class="oneko-pick-spr" style="background-image:url('https://raw.githubusercontent.com/kyrie25/spicetify-oneko/main/assets/oneko/oneko-maia.gif');background-position:-96px -96px"></div>
-    <span class="oneko-pick-label">Maia</span>
-  </div>
-  <div class="oneko-pick-row" data-v="vaporwave" role="menuitem" tabindex="0">
-    <div class="oneko-pick-spr" style="background-image:url('https://raw.githubusercontent.com/kyrie25/spicetify-oneko/main/assets/oneko/oneko-vaporwave.gif');background-position:-96px -96px"></div>
-    <span class="oneko-pick-label">Vaporwave</span>
-  </div>
-</div>
-<button id="oneko-btn" title="Change pet" aria-label="Change cursor pet">🐱</button>
 
 <script>
 /* ── TYPEWRITER ─────────────────────────────────────────── */
@@ -772,7 +739,7 @@ function closeLive(){liveModal.classList.remove("open");document.body.style.over
 (function(){
   var GH="https://raw.githubusercontent.com/kyrie25/spicetify-oneko/main/assets/oneko/oneko-";
   var el=document.createElement("div");el.id="oneko";
-  var nx=64,ny=64,mx=0,my=0,fc=0,it=0,ia=null,iaf=0,fs=false,gr=false,gs=true,nu=false,kn=false,v="classic";
+  var nx=64,ny=64,mx=0,my=0,fc=0,it=0,ia=null,iaf=0,fs=false,gr=false,gs=true,nu=false,kn=false,v="maia";
   try{var sv=sessionStorage.getItem("oneko:v");if(sv)v=sv}catch(e){}
   try{if(sessionStorage.getItem("oneko:k")==="1")kn=true}catch(e){}
   var sp={idle:[[-3,-3]],alert:[[-7,-3]],scratchSelf:[[-5,0],[-6,0],[-7,0]],
@@ -787,9 +754,6 @@ function closeLive(){liveModal.classList.remove("open");document.body.style.over
     el.style.filter=kn?"invert(100%) drop-shadow(0 0 6px rgba(200,210,255,.35))":"drop-shadow(0 0 6px rgba(200,210,255,.35))";
     try{sessionStorage.setItem("oneko:v",v)}catch(e){}
     try{sessionStorage.setItem("oneko:k",kn?"1":"0")}catch(e){}
-    document.querySelectorAll(".oneko-pick-row").forEach(function(r){r.classList.toggle("active",r.dataset.v===v)});
-    var em={classic:"🐱",dog:"🐶",tora:"🐯",maia:"🐱",vaporwave:"🌸"};
-    document.getElementById("oneko-btn").textContent=em[v]||"🐾";
   }
   function ss2(n,f){var s=sp[n][f%sp[n].length];el.style.backgroundPosition=(s[0]*32)+"px "+(s[1]*32)+"px"}
   function ri(){ia=null;iaf=0}
@@ -847,12 +811,7 @@ function closeLive(){liveModal.classList.remove("open");document.body.style.over
     window.addEventListener("mousemove",mm);window.addEventListener("mouseup",mu);
   });
   setInterval(frame,100);
-  var pk=document.getElementById("oneko-picker");
-  document.getElementById("oneko-btn").addEventListener("click",function(e){e.stopPropagation();pk.classList.toggle("open")});
-  document.addEventListener("click",function(e){if(!pk.contains(e.target)&&e.target.id!=="oneko-btn")pk.classList.remove("open")});
-  document.querySelectorAll(".oneko-pick-row").forEach(function(r){
-    r.addEventListener("click",function(){v=r.dataset.v;av();pk.classList.remove("open")});
-  });
+
 })();
 </script>
 </body>

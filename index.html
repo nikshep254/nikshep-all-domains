@@ -641,14 +641,13 @@ tick();
 /* ── HERO MUSIC PLAYER ──────────────────────────────────── */
 (function(){
   var audio=document.getElementById("hp-audio");
-  var hp=document.getElementById("hp");
+  var wrap=document.getElementById("hp");
   var playBtn=document.getElementById("hp-play");
   var icon=document.getElementById("hp-icon");
   var fill=document.getElementById("hp-fill");
   var knob=document.getElementById("hp-knob");
   var bar=document.getElementById("hp-bar");
   var cur=document.getElementById("hp-cur");
-  var art=document.getElementById("hp-art");
 
   var PLAY='<path d="M8 5v14l11-7z"/>';
   var PAUSE='<path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/>';
@@ -658,7 +657,7 @@ tick();
   function fmt(s){s=Math.max(0,Math.floor(s));return Math.floor(s/60)+":"+(s%60<10?"0":"")+s%60}
 
   function setPlaying(p){
-    hp.classList.toggle("playing",p);
+    wrap.classList.toggle("playing",p);
     playBtn.classList.toggle("playing",p);
     playBtn.classList.toggle("paused",!p);
     icon.innerHTML=p?PAUSE:PLAY;
@@ -670,9 +669,7 @@ tick();
   }
 
   playBtn.addEventListener("click",togglePlay);
-  art.addEventListener("click",togglePlay);
   audio.addEventListener("ended",function(){setPlaying(false)});
-  audio.addEventListener("loadedmetadata",function(){dur.textContent=fmt(audio.duration)});
   audio.addEventListener("timeupdate",function(){
     if(!audio.duration)return;
     var p=audio.currentTime/audio.duration*100;
@@ -703,13 +700,6 @@ tick();
     if(e.code==="ArrowRight")audio.currentTime=Math.min(audio.duration||0,audio.currentTime+10);
   });
 
-  /* Keyboard */
-  document.addEventListener("keydown",function(e){
-    if(e.target.tagName==="INPUT"||e.target.tagName==="TEXTAREA")return;
-    if(e.code==="Space"){e.preventDefault();togglePlay();}
-    if(e.code==="ArrowLeft")audio.currentTime=Math.max(0,audio.currentTime-10);
-    if(e.code==="ArrowRight")audio.currentTime=Math.min(audio.duration||0,audio.currentTime+10);
-  });
 })();
 
 /* ── CARD BUILDER ───────────────────────────────────────── */

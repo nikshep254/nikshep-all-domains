@@ -572,6 +572,391 @@ footer{
   animation:fadeUp .5s 1.2s ease both;opacity:0;
 }
 .ss-notice a{color:#4d4d52;text-decoration:underline}
+
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   FILTER BAR
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+.filter-bar{
+  display:flex;align-items:center;gap:8px;
+  flex-wrap:wrap;
+  margin-bottom:28px;
+  animation:fadeUp .5s .3s ease both;
+  opacity:0;
+}
+.filter-bar.ready{opacity:1}
+.filter-search{
+  display:flex;align-items:center;gap:8px;
+  flex:1;min-width:180px;
+  padding:9px 14px;
+  background:var(--surface);
+  border:1px solid var(--line);
+  border-radius:12px;
+  transition:border-color .2s,box-shadow .2s;
+}
+.filter-search:focus-within{
+  border-color:rgba(41,151,255,.5);
+  box-shadow:0 0 0 3px rgba(41,151,255,.12);
+}
+.filter-search svg{width:14px;height:14px;flex-shrink:0;color:var(--gray3)}
+.filter-search input{
+  background:none;border:none;outline:none;
+  font-family:var(--font);font-size:13px;font-weight:500;
+  color:var(--gray1);letter-spacing:-.01em;
+  width:100%;
+}
+.filter-search input::placeholder{color:var(--gray4)}
+.filter-chips{display:flex;gap:6px;flex-wrap:wrap}
+.chip{
+  padding:6px 13px;border-radius:99px;
+  font-size:12px;font-weight:600;letter-spacing:.02em;
+  border:1px solid var(--line);
+  background:var(--surface);
+  color:var(--gray3);cursor:pointer;
+  transition:all .18s;white-space:nowrap;
+  user-select:none;
+}
+.chip:hover{border-color:var(--line2);color:var(--gray2);background:var(--surface2)}
+.chip.on{
+  background:rgba(41,151,255,.15);
+  border-color:rgba(41,151,255,.4);
+  color:#2997ff;
+}
+.chip-clear{
+  padding:6px 13px;border-radius:99px;
+  font-size:12px;font-weight:600;
+  border:1px solid rgba(255,69,58,.25);
+  background:rgba(255,69,58,.08);
+  color:#ff453a;cursor:pointer;
+  transition:all .18s;display:none;
+}
+.chip-clear.show{display:block}
+.chip-clear:hover{background:rgba(255,69,58,.18)}
+
+/* Empty state */
+.empty-state{
+  grid-column:1/-1;
+  text-align:center;padding:64px 24px;
+  animation:fadeUp .3s ease;
+}
+.empty-icon{font-size:36px;margin-bottom:12px;opacity:.4}
+.empty-msg{font-size:15px;font-weight:600;color:var(--gray3);letter-spacing:-.02em}
+.empty-sub{font-size:13px;color:var(--gray4);margin-top:6px}
+
+/* Card hide/show animation */
+.card{transition:transform .22s cubic-bezier(.34,1.56,.64,1),box-shadow .22s ease,border-color .2s,opacity .22s ease,scale .22s ease}
+.card.hiding{
+  opacity:0;
+  scale:0.96;
+  pointer-events:none;
+}
+
+/* Result count badge */
+.result-count{
+  font-size:11px;font-weight:600;letter-spacing:.04em;text-transform:uppercase;
+  color:var(--gray4);margin-left:auto;white-space:nowrap;
+  transition:opacity .2s;
+}
+
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   WELCOME POPUP — bottom right
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+#welcome-popup{
+  position:fixed;
+  bottom:80px;right:24px;
+  z-index:99980;
+  width:300px;
+  background:rgba(16,16,20,.95);
+  border:1px solid rgba(255,255,255,.12);
+  border-radius:20px;
+  padding:20px;
+  backdrop-filter:blur(28px);-webkit-backdrop-filter:blur(28px);
+  box-shadow:0 32px 80px rgba(0,0,0,.8),0 0 0 1px rgba(255,255,255,.05) inset;
+  animation:popIn .5s 1.8s cubic-bezier(.34,1.56,.64,1) both;
+  transform-origin:bottom right;
+}
+@keyframes popIn{
+  from{opacity:0;transform:scale(.85) translateY(16px)}
+  to  {opacity:1;transform:scale(1) translateY(0)}
+}
+#welcome-popup.closing{
+  animation:popOut .3s cubic-bezier(.55,.06,.68,.19) forwards;
+}
+@keyframes popOut{
+  to{opacity:0;transform:scale(.88) translateY(12px)}
+}
+
+.wp-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}
+.wp-avatar{
+  width:36px;height:36px;border-radius:50%;
+  background:linear-gradient(135deg,#0a84ff,#bf5af2);
+  display:flex;align-items:center;justify-content:center;
+  font-size:16px;flex-shrink:0;
+  box-shadow:0 0 16px rgba(41,151,255,.3);
+}
+.wp-close{
+  width:24px;height:24px;border-radius:50%;
+  background:rgba(255,255,255,.07);border:none;
+  color:var(--gray3);font-size:14px;
+  cursor:pointer;display:flex;align-items:center;justify-content:center;
+  transition:all .2s;line-height:1;
+}
+.wp-close:hover{background:rgba(255,255,255,.14);color:var(--white)}
+
+.wp-title{font-size:14px;font-weight:700;color:var(--white);letter-spacing:-.02em;margin-bottom:5px}
+.wp-body{font-size:12.5px;font-weight:400;color:var(--gray2);line-height:1.55;letter-spacing:-.005em}
+.wp-body strong{color:var(--gray1);font-weight:600}
+
+/* Mini project teasers */
+.wp-links{display:flex;flex-direction:column;gap:6px;margin-top:14px}
+.wp-link{
+  display:flex;align-items:center;gap:10px;
+  padding:9px 12px;border-radius:12px;
+  background:rgba(255,255,255,.04);
+  border:1px solid rgba(255,255,255,.06);
+  text-decoration:none;color:inherit;
+  transition:all .18s;cursor:pointer;
+}
+.wp-link:hover{background:rgba(255,255,255,.09);border-color:rgba(255,255,255,.12);transform:translateX(3px)}
+.wp-link-ico{font-size:16px;flex-shrink:0}
+.wp-link-info{flex:1;min-width:0}
+.wp-link-name{font-size:12px;font-weight:600;color:var(--gray1);letter-spacing:-.01em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.wp-link-url{font-size:10.5px;color:var(--gray4);letter-spacing:-.01em}
+.wp-link-arr{font-size:11px;color:var(--gray4);flex-shrink:0;transition:transform .18s}
+.wp-link:hover .wp-link-arr{transform:translateX(3px);color:var(--gray2)}
+
+.wp-footer{
+  margin-top:14px;padding-top:12px;
+  border-top:1px solid rgba(255,255,255,.06);
+  display:flex;align-items:center;justify-content:space-between;
+  font-size:11px;color:var(--gray4);
+}
+.wp-cta{
+  font-size:11px;font-weight:600;color:var(--blue);
+  cursor:pointer;transition:opacity .2s;background:none;border:none;padding:0;
+}
+.wp-cta:hover{opacity:.75}
+
+/* Progress dots */
+.wp-dots{display:flex;gap:4px;align-items:center}
+.wp-dot{width:4px;height:4px;border-radius:50%;background:rgba(255,255,255,.15);transition:all .3s}
+.wp-dot.on{width:16px;border-radius:2px;background:var(--blue)}
+
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   FEATURE 6 — Time-aware greeting badge
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+.time-greeting{
+  display:inline-flex;align-items:center;gap:7px;
+  padding:6px 14px;border-radius:99px;
+  background:rgba(255,255,255,.05);
+  border:1px solid rgba(255,255,255,.09);
+  font-size:12px;font-weight:500;color:rgba(200,205,220,.75);
+  letter-spacing:-.005em;
+  margin-bottom:20px;
+  animation:fadeUp .7s .05s ease both;
+  backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);
+}
+.time-greeting .tg-emoji{font-size:14px}
+.time-greeting .tg-time{
+  font-variant-numeric:tabular-nums;
+  color:rgba(220,225,240,.9);font-weight:600;
+}
+
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   FEATURE 7 — Animated stats bar
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+.stats-bar{
+  display:flex;align-items:center;justify-content:center;
+  gap:0;
+  margin-top:40px;margin-bottom:0;
+  animation:fadeUp .7s .8s ease both;opacity:0;
+  border:1px solid var(--line);
+  border-radius:16px;
+  overflow:hidden;
+  background:var(--surface);
+}
+.stat-item{
+  flex:1;padding:18px 12px;
+  text-align:center;
+  position:relative;
+  transition:background .2s;
+}
+.stat-item:hover{background:var(--surface2)}
+.stat-item+.stat-item::before{
+  content:'';
+  position:absolute;left:0;top:20%;bottom:20%;
+  width:1px;background:var(--line);
+}
+.stat-num{
+  font-size:clamp(22px,4vw,34px);
+  font-weight:800;
+  letter-spacing:-.04em;
+  line-height:1;
+  color:var(--white);
+  display:block;
+  font-variant-numeric:tabular-nums;
+}
+.stat-num.blue  {color:#2997ff}
+.stat-num.green {color:#30d158}
+.stat-num.purple{color:#bf5af2}
+.stat-num.orange{color:#ff9f0a}
+.stat-lbl{
+  font-size:11px;font-weight:500;
+  color:var(--gray3);letter-spacing:.04em;
+  text-transform:uppercase;margin-top:4px;display:block;
+}
+
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   FEATURE 8 — Tinder / Swipe Mode
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+#tinder-btn{
+  position:fixed;bottom:24px;left:24px;z-index:99998;
+  display:flex;align-items:center;gap:8px;
+  padding:9px 16px;border-radius:99px;
+  background:rgba(18,18,22,.92);
+  border:1px solid rgba(255,255,255,.12);
+  backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
+  font-size:12px;font-weight:600;color:var(--gray2);
+  cursor:pointer;transition:all .2s;letter-spacing:-.01em;
+  box-shadow:0 8px 32px rgba(0,0,0,.5);
+}
+#tinder-btn:hover{background:rgba(30,30,36,.96);color:var(--white);border-color:rgba(255,255,255,.2);transform:translateY(-1px)}
+#tinder-btn .tb-ico{font-size:14px}
+
+#tinder-overlay{
+  position:fixed;inset:0;z-index:99985;
+  background:rgba(0,0,0,.96);
+  display:none;flex-direction:column;align-items:center;justify-content:center;
+  padding:24px;
+  animation:fadeIn .25s ease;
+}
+#tinder-overlay.open{display:flex}
+
+.tinder-header{
+  position:absolute;top:0;left:0;right:0;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:16px 20px;
+  border-bottom:1px solid rgba(255,255,255,.06);
+}
+.tinder-title{
+  font-size:13px;font-weight:700;color:var(--gray2);
+  letter-spacing:.04em;text-transform:uppercase;
+}
+.tinder-prog{font-size:13px;font-weight:600;color:var(--gray3)}
+.tinder-close{
+  width:32px;height:32px;border-radius:50%;
+  border:none;background:rgba(255,255,255,.07);
+  color:var(--gray2);font-size:18px;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;
+  transition:all .2s;line-height:1;
+}
+.tinder-close:hover{background:rgba(255,69,58,.25);color:#ff453a}
+
+/* Card stage */
+.tinder-stage{
+  position:relative;
+  width:100%;max-width:420px;
+  height:520px;
+  perspective:1000px;
+}
+.tinder-card{
+  position:absolute;inset:0;
+  background:var(--surface);
+  border:1px solid rgba(255,255,255,.09);
+  border-radius:24px;overflow:hidden;
+  display:flex;flex-direction:column;
+  box-shadow:0 32px 80px rgba(0,0,0,.7);
+  transition:transform .45s cubic-bezier(.34,1.2,.64,1),opacity .35s ease;
+  will-change:transform;
+  cursor:grab;user-select:none;
+}
+.tinder-card:active{cursor:grabbing}
+
+/* Drag visual feedback */
+.tinder-card.dragging{transition:none}
+.tinder-stamp{
+  position:absolute;top:28px;
+  font-size:28px;font-weight:900;letter-spacing:.06em;
+  padding:8px 18px;border-radius:10px;border:4px solid;
+  opacity:0;pointer-events:none;z-index:10;
+  transition:opacity .12s;
+  transform:rotate(-15deg);
+}
+.tinder-stamp.left{
+  right:24px;color:#ff453a;border-color:#ff453a;
+  transform:rotate(15deg);
+}
+.tinder-stamp.right{
+  left:24px;color:#30d158;border-color:#30d158;
+  transform:rotate(-15deg);
+}
+
+/* Tinder card internals */
+.tc-screen{
+  width:100%;height:220px;flex-shrink:0;overflow:hidden;position:relative;background:var(--surface2);
+}
+.tc-screen img{width:100%;height:100%;object-fit:cover;object-position:top;display:block}
+.tc-screen-grad{position:absolute;inset:0;background:linear-gradient(180deg,transparent 45%,rgba(0,0,0,.55) 100%)}
+.tc-ico{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:44px;opacity:.15}
+.tc-body{padding:20px;flex:1;display:flex;flex-direction:column;gap:8px}
+.tc-row{display:flex;align-items:center;justify-content:space-between;gap:8px}
+.tc-name{font-size:20px;font-weight:800;color:var(--white);letter-spacing:-.03em}
+.tc-tag{font-size:10px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;padding:4px 10px;border-radius:99px;flex-shrink:0}
+.tc-desc{font-size:13.5px;color:var(--gray2);line-height:1.58;flex:1}
+.tc-url{font-size:11px;color:var(--gray4);margin-top:auto}
+.tc-open{
+  display:flex;align-items:center;justify-content:center;gap:6px;
+  padding:12px;border-radius:14px;
+  background:var(--blue);color:#fff;
+  font-size:13px;font-weight:700;
+  text-decoration:none;transition:background .2s;
+}
+.tc-open:hover{background:#4da6ff}
+
+/* Action hints */
+.tinder-hints{
+  display:flex;gap:28px;margin-top:24px;
+  align-items:center;
+}
+.th-hint{
+  display:flex;align-items:center;gap:6px;
+  font-size:12px;font-weight:500;color:var(--gray4);
+}
+.th-key{
+  display:inline-flex;align-items:center;justify-content:center;
+  min-width:28px;height:22px;padding:0 6px;
+  border:1px solid var(--line2);border-radius:6px;
+  font-size:11px;font-weight:700;color:var(--gray3);
+  background:var(--surface2);
+}
+
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   FEATURE 9 — Easter egg fireworks + toast
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+#egg-canvas{
+  position:fixed;inset:0;
+  pointer-events:none;z-index:99996;
+  display:none;
+}
+#egg-canvas.active{display:block}
+.egg-toast{
+  position:fixed;top:24px;left:50%;transform:translateX(-50%) translateY(-80px);
+  z-index:99997;
+  background:rgba(16,16,20,.95);
+  border:1px solid rgba(255,255,255,.14);
+  border-radius:99px;
+  padding:12px 24px;
+  font-size:14px;font-weight:700;color:var(--white);
+  letter-spacing:-.02em;
+  backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);
+  box-shadow:0 20px 60px rgba(0,0,0,.6);
+  transition:transform .4s cubic-bezier(.34,1.56,.64,1),opacity .3s;
+  white-space:nowrap;
+  display:none;
+}
+.egg-toast.show{
+  display:block;
+  transform:translateX(-50%) translateY(0);
+}
 </style>
 </head>
 <body>
@@ -583,6 +968,12 @@ footer{
 ══════════════════════════════════════════════ -->
 <section class="hero">
   <canvas id="smoke-canvas" aria-hidden="true"></canvas>
+  <span class="time-greeting" id="time-greeting">
+    <span class="tg-emoji" id="tg-emoji">🌙</span>
+    <span id="tg-text">Good evening</span>
+    &mdash;
+    <span class="tg-time" id="tg-clock">--:--</span>
+  </span>
   <span class="hero-eyebrow">Nikshep Doggalli &nbsp;·&nbsp; Builder &amp; Designer</span>
   <h1 class="hero-title">
     <span class="static-word">Building</span><br>
@@ -608,8 +999,52 @@ footer{
       All Links
     </a>
   </div>
+
+  <!-- Stats bar -->
+  <div class="stats-bar" id="stats-bar">
+    <div class="stat-item">
+      <span class="stat-num blue" data-target="19" id="stat-projects">0</span>
+      <span class="stat-lbl">Projects</span>
+    </div>
+    <div class="stat-item">
+      <span class="stat-num green" data-target="2" id="stat-domains">0</span>
+      <span class="stat-lbl">Domains</span>
+    </div>
+    <div class="stat-item">
+      <span class="stat-num purple" data-target="1" id="stat-builders">0</span>
+      <span class="stat-lbl">Builder</span>
+    </div>
+    <div class="stat-item">
+      <span class="stat-num orange" data-target="100" id="stat-passion">0</span>
+      <span class="stat-lbl">% Passion</span>
+    </div>
+  </div>
 </section>
 
+
+<!-- ══════════════════════════════════════════════
+     FILTER BAR
+══════════════════════════════════════════════ -->
+<div class="filter-bar" id="filter-bar">
+  <div class="filter-search">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+    <input type="text" id="filter-input" placeholder="Search projects…" autocomplete="off" spellcheck="false"/>
+  </div>
+  <div class="filter-chips" id="filter-chips">
+    <span class="chip on" data-tag="all">All</span>
+    <span class="chip" data-tag="AI">AI</span>
+    <span class="chip" data-tag="Finance">Finance</span>
+    <span class="chip" data-tag="Time">Time</span>
+    <span class="chip" data-tag="Personal">Personal</span>
+    <span class="chip" data-tag="Community">Community</span>
+    <span class="chip" data-tag="Fun">Fun</span>
+    <span class="chip" data-tag="API">API</span>
+    <span class="chip" data-tag="Tool">Tool</span>
+    <span class="chip" data-tag="Experiment">Experiment</span>
+  </div>
+  <span class="chip-clear" id="chip-clear">✕ Clear</span>
+  <span class="result-count" id="result-count"></span>
+</div>
 <!-- ══════════════════════════════════════════════
      VERCEL PROJECTS — FEATURED FIRST
 ══════════════════════════════════════════════ -->
@@ -874,6 +1309,497 @@ MICRO.forEach(function(p){gm.appendChild(card(p,false))});
 /* footer fade */
 setTimeout(function(){document.querySelector("footer").style.opacity="1"},1000);
 
+/* ══════════════════════════════════════════════════════════════
+   FEATURE 6 — Time-aware greeting + live clock
+══════════════════════════════════════════════════════════════ */
+(function(){
+  var emoji=['🌙','🌅','☀️','🌤','🌙'];
+  var greet=['Good night','Good morning','Good afternoon','Good evening','Good night'];
+  var ranges=[0,6,12,17,21,24];
+
+  function pad(n){return n<10?'0'+n:n}
+  function update(){
+    var now=new Date();
+    var h=now.getHours();
+    var phase=0;
+    for(var i=0;i<ranges.length-1;i++){if(h>=ranges[i]&&h<ranges[i+1]){phase=i;break;}}
+    var em=document.getElementById('tg-emoji');
+    var tx=document.getElementById('tg-text');
+    var cl=document.getElementById('tg-clock');
+    if(em)em.textContent=emoji[phase];
+    if(tx)tx.textContent=greet[phase];
+    if(cl)cl.textContent=pad(h)+':'+pad(now.getMinutes());
+  }
+  update();
+  setInterval(update,30000);
+})();
+
+/* ══════════════════════════════════════════════════════════════
+   FEATURE 7 — Count-up stats (IntersectionObserver)
+══════════════════════════════════════════════════════════════ */
+(function(){
+  var bar=document.getElementById('stats-bar');
+  if(!bar)return;
+
+  function easeOut(t){return 1-Math.pow(1-t,3);}
+
+  function countUp(el,target,duration){
+    var start=performance.now();
+    function step(now){
+      var t=Math.min((now-start)/duration,1);
+      el.textContent=Math.round(easeOut(t)*target);
+      if(t<1)requestAnimationFrame(step);
+      else el.textContent=target+(el.dataset.suffix||'');
+    }
+    requestAnimationFrame(step);
+  }
+
+  var triggered=false;
+  var obs=new IntersectionObserver(function(entries){
+    if(entries[0].isIntersecting&&!triggered){
+      triggered=true;
+      bar.style.opacity='1';
+      bar.querySelectorAll('.stat-num').forEach(function(el){
+        var target=parseInt(el.dataset.target,10);
+        countUp(el,target,1100);
+      });
+      obs.disconnect();
+    }
+  },{threshold:.4});
+  obs.observe(bar);
+})();
+
+/* ══════════════════════════════════════════════════════════════
+   FEATURE 8 — Tinder / Swipe Mode
+══════════════════════════════════════════════════════════════ */
+(function(){
+  var overlay=document.getElementById('tinder-overlay');
+  var stage=document.getElementById('tinder-stage');
+  var progEl=document.getElementById('tinder-prog');
+  var opened=[];
+
+  /* Build deck from both data arrays */
+  function buildDeck(){
+    var all=[];
+    if(typeof VERCEL!=='undefined')VERCEL.forEach(function(p){all.push(p)});
+    if(typeof MICRO!=='undefined')MICRO.forEach(function(p){all.push(p)});
+    return all;
+  }
+
+  var deck=[], idx=0;
+
+  function ss(u){return"https://api.microlink.io/?url="+encodeURIComponent(u)+"&screenshot=true&meta=false&embed=screenshot.url&type=jpeg&overlay.browser=dark&viewport.width=960&viewport.height=600";}
+
+  function renderCard(p){
+    var div=document.createElement('div');
+    div.className='tinder-card';
+
+    /* stamp overlays */
+    var stampL=document.createElement('div');
+    stampL.className='tinder-stamp left';stampL.textContent='SKIP';
+    var stampR=document.createElement('div');
+    stampR.className='tinder-stamp right';stampR.textContent='OPEN';
+    div.appendChild(stampL);div.appendChild(stampR);
+
+    /* tag class */
+    var tagCls=p.c||'c-blue';
+
+    div.innerHTML+=
+      '<div class="tc-screen">'+
+        '<div class="tc-ico">'+p.i+'</div>'+
+        '<img src="'+ss(p.u)+'" alt="'+p.n+'" loading="lazy" onerror="this.style.display='none'" onload="this.style.opacity='1'"/>'+
+        '<div class="tc-screen-grad"></div>'+
+      '</div>'+
+      '<div class="tc-body">'+
+        '<div class="tc-row">'+
+          '<span class="tc-name">'+p.n+'</span>'+
+          '<span class="tc-tag '+tagCls+'">'+p.t+'</span>'+
+        '</div>'+
+        '<p class="tc-desc">'+p.d+'</p>'+
+        '<p class="tc-url">'+p.u.replace(/^https?:\/\//,'')+'</p>'+
+        '<a class="tc-open" href="'+p.u+'" target="_blank" rel="noopener">'+
+          'Open Project ↗'+
+        '</a>'+
+      '</div>';
+
+    /* Touch / mouse swipe */
+    var startX=0,startY=0,currentX=0,dragging=false;
+    function onStart(e){
+      dragging=true;div.classList.add('dragging');
+      startX=e.touches?e.touches[0].clientX:e.clientX;
+      startY=e.touches?e.touches[0].clientY:e.clientY;
+    }
+    function onMove(e){
+      if(!dragging)return;
+      currentX=(e.touches?e.touches[0].clientX:e.clientX)-startX;
+      var rot=currentX*0.08;
+      div.style.transform='translateX('+currentX+'px) rotate('+rot+'deg)';
+      var pct=Math.min(Math.abs(currentX)/100,1);
+      if(currentX>0){stampR.style.opacity=pct;stampL.style.opacity=0;}
+      else{stampL.style.opacity=pct;stampR.style.opacity=0;}
+    }
+    function onEnd(){
+      if(!dragging)return;
+      dragging=false;div.classList.remove('dragging');
+      if(currentX>90)swipe('right');
+      else if(currentX<-90)swipe('left');
+      else{div.style.transform='';stampL.style.opacity=0;stampR.style.opacity=0;}
+    }
+    div.addEventListener('mousedown',onStart);
+    div.addEventListener('touchstart',onStart,{passive:true});
+    window.addEventListener('mousemove',onMove);
+    window.addEventListener('touchmove',onMove,{passive:true});
+    window.addEventListener('mouseup',onEnd);
+    window.addEventListener('touchend',onEnd);
+
+    return div;
+  }
+
+  function swipe(dir){
+    var card=stage.querySelector('.tinder-card');
+    if(!card)return;
+    var tx=dir==='right'?window.innerWidth:-window.innerWidth;
+    card.style.transition='transform .4s cubic-bezier(.55,.06,.68,.19),opacity .35s';
+    card.style.transform='translateX('+tx+'px) rotate('+(dir==='right'?25:-25)+'deg)';
+    card.style.opacity='0';
+    if(dir==='right'&&deck[idx]){
+      window.open(deck[idx].u,'_blank','noopener');
+      opened.push(deck[idx].u);
+    }
+    idx++;
+    setTimeout(function(){
+      card.remove();
+      loadNext();
+    },400);
+  }
+
+  function loadNext(){
+    if(idx>=deck.length){
+      stage.innerHTML='<div style="text-align:center;color:var(--gray3);font-size:15px;font-weight:600;padding:60px 20px">🎉 You've seen them all!<br><span style="font-size:13px;font-weight:400;color:var(--gray4)">'+opened.length+' opened</span></div>';
+      if(progEl)progEl.textContent='Done!';
+      return;
+    }
+    var card=renderCard(deck[idx]);
+    stage.appendChild(card);
+    if(progEl)progEl.textContent=(idx+1)+' / '+deck.length;
+  }
+
+  function openTinder(){
+    deck=buildDeck();idx=0;
+    stage.innerHTML='';
+    loadNext();
+    overlay.classList.add('open');
+    document.body.style.overflow='hidden';
+  }
+  function closeTinder(){
+    overlay.classList.remove('open');
+    document.body.style.overflow='';
+  }
+
+  document.getElementById('tinder-btn').addEventListener('click',openTinder);
+  document.getElementById('tinder-close').addEventListener('click',closeTinder);
+  document.addEventListener('keydown',function(e){
+    if(!overlay.classList.contains('open'))return;
+    if(e.key==='Escape')closeTinder();
+    if(e.key==='ArrowRight')swipe('right');
+    if(e.key==='ArrowLeft')swipe('left');
+  });
+})();
+
+/* ══════════════════════════════════════════════════════════════
+   FEATURE 9 — Easter egg: type "nikkk" → fireworks + cat dance
+══════════════════════════════════════════════════════════════ */
+(function(){
+  var seq='nikkk', buf='';
+  var cv=document.getElementById('egg-canvas');
+  var toast=document.getElementById('egg-toast');
+  var fired=false;
+  if(!cv)return;
+  var ctx=cv.getContext('2d');
+
+  function resize(){cv.width=window.innerWidth;cv.height=window.innerHeight;}
+  resize();window.addEventListener('resize',resize);
+
+  document.addEventListener('keydown',function(e){
+    if(['INPUT','TEXTAREA'].indexOf(document.activeElement.tagName)>-1)return;
+    buf=(buf+e.key).slice(-seq.length);
+    if(buf===seq&&!fired){fired=true;launch();}
+  });
+
+  var particles2=[];
+  var COLORS=['#2997ff','#bf5af2','#30d158','#ff9f0a','#ff453a','#ffd60a','#64d2ff','#ff375f'];
+
+  function Spark(x,y){
+    var ang=Math.random()*Math.PI*2;
+    var spd=3+Math.random()*8;
+    this.x=x;this.y=y;
+    this.vx=Math.cos(ang)*spd;
+    this.vy=Math.sin(ang)*spd-4;
+    this.life=0;this.maxLife=50+Math.random()*40;
+    this.r=2+Math.random()*3;
+    this.color=COLORS[Math.floor(Math.random()*COLORS.length)];
+    this.trail=[];
+  }
+  Spark.prototype.update=function(){
+    this.trail.push({x:this.x,y:this.y});
+    if(this.trail.length>6)this.trail.shift();
+    this.vy+=0.18;
+    this.x+=this.vx;this.y+=this.vy;
+    this.vx*=0.97;this.life++;
+  };
+  Spark.prototype.draw=function(){
+    var op=1-this.life/this.maxLife;
+    ctx.beginPath();
+    ctx.arc(this.x,this.y,this.r*op,0,Math.PI*2);
+    ctx.fillStyle=this.color;
+    ctx.globalAlpha=op;
+    ctx.fill();
+    ctx.globalAlpha=1;
+  };
+
+  function burst(x,y,count){
+    for(var i=0;i<count;i++)particles2.push(new Spark(x,y));
+  }
+
+  function launch(){
+    cv.classList.add('active');
+    /* Show toast */
+    toast.classList.add('show');
+    setTimeout(function(){toast.classList.remove('show');},3500);
+    /* 5 staggered bursts */
+    var points=[
+      [cv.width*.5,cv.height*.25],
+      [cv.width*.2,cv.height*.3],
+      [cv.width*.8,cv.height*.2],
+      [cv.width*.35,cv.height*.15],
+      [cv.width*.65,cv.height*.35],
+    ];
+    points.forEach(function(pt,i){
+      setTimeout(function(){burst(pt[0],pt[1],60);},i*200);
+    });
+    /* Cat "dance" — rapid position shake */
+    var neko=document.getElementById('oneko');
+    if(neko){
+      var ox=parseInt(neko.style.left)||100;
+      var oy=parseInt(neko.style.top)||100;
+      var dances=0;
+      var danceI=setInterval(function(){
+        neko.style.left=(ox+Math.sin(dances*1.2)*30)+'px';
+        neko.style.top=(oy+Math.cos(dances*1.4)*20)+'px';
+        dances++;
+        if(dances>40){clearInterval(danceI);}
+      },50);
+    }
+    /* Animate */
+    function loop2(){
+      ctx.clearRect(0,0,cv.width,cv.height);
+      for(var i=particles2.length-1;i>=0;i--){
+        particles2[i].update();
+        particles2[i].draw();
+        if(particles2[i].life>=particles2[i].maxLife)particles2.splice(i,1);
+      }
+      if(particles2.length>0)requestAnimationFrame(loop2);
+      else{cv.classList.remove('active');fired=false;buf='';}
+    }
+    requestAnimationFrame(loop2);
+  }
+})();
+
+/* ══════════════════════════════════════════════════════════════
+   FILTER BAR ENGINE
+══════════════════════════════════════════════════════════════ */
+(function(){
+  /* Gather ALL rendered cards after both grids populate */
+  function getAllCards(){
+    return Array.from(document.querySelectorAll('.card'));
+  }
+
+  var activeTag='all', searchQ='';
+
+  function normalize(s){ return s.toLowerCase().replace(/[^a-z0-9 ]/g,''); }
+
+  function matchesTag(card, tag){
+    if(tag==='all') return true;
+    var t=card.querySelector('.tag');
+    if(!t) return false;
+    return t.textContent.toLowerCase().indexOf(tag.toLowerCase())!==-1;
+  }
+
+  function matchesSearch(card, q){
+    if(!q) return true;
+    var name=card.querySelector('.name');
+    var desc=card.querySelector('.desc');
+    var url=card.querySelector('.url');
+    var hay=[name,desc,url].map(function(el){return el?normalize(el.textContent):''}).join(' ');
+    return hay.indexOf(normalize(q))!==-1;
+  }
+
+  function applyFilters(){
+    var cards=getAllCards();
+    var shown=0;
+    cards.forEach(function(c){
+      var pass=matchesTag(c,activeTag)&&matchesSearch(c,searchQ);
+      if(pass){ c.classList.remove('hiding'); shown++; }
+      else     { c.classList.add('hiding'); }
+    });
+
+    /* Empty states */
+    document.querySelectorAll('.empty-state').forEach(function(e){e.remove()});
+    ['grid-vercel','grid-micro'].forEach(function(id){
+      var g=document.getElementById(id);
+      if(!g) return;
+      var vis=Array.from(g.querySelectorAll('.card:not(.hiding)')).length;
+      if(vis===0){
+        var e=document.createElement('div');
+        e.className='empty-state';
+        e.innerHTML='<div class="empty-icon">🔍</div><p class="empty-msg">No projects found</p><p class="empty-sub">Try a different search or filter</p>';
+        g.appendChild(e);
+      }
+    });
+
+    /* Count badge */
+    var rc=document.getElementById('result-count');
+    var total=cards.length;
+    if(activeTag!=='all'||searchQ){
+      rc.textContent=shown+' / '+total;
+    } else {
+      rc.textContent='';
+    }
+
+    /* Clear button */
+    var clr=document.getElementById('chip-clear');
+    if(activeTag!=='all'||searchQ){clr.classList.add('show');}
+    else{clr.classList.remove('show');}
+  }
+
+  /* Chip clicks */
+  document.getElementById('filter-chips').addEventListener('click',function(e){
+    var chip=e.target.closest('.chip');
+    if(!chip) return;
+    document.querySelectorAll('.chip').forEach(function(c){c.classList.remove('on')});
+    chip.classList.add('on');
+    activeTag=chip.dataset.tag;
+    applyFilters();
+  });
+
+  /* Search input */
+  document.getElementById('filter-input').addEventListener('input',function(){
+    searchQ=this.value.trim();
+    applyFilters();
+  });
+
+  /* Clear */
+  document.getElementById('chip-clear').addEventListener('click',function(){
+    activeTag='all';searchQ='';
+    document.getElementById('filter-input').value='';
+    document.querySelectorAll('.chip').forEach(function(c){c.classList.remove('on')});
+    document.querySelector('.chip[data-tag="all"]').classList.add('on');
+    applyFilters();
+  });
+
+  /* Animate bar in */
+  setTimeout(function(){
+    var fb=document.getElementById('filter-bar');
+    if(fb) fb.classList.add('ready');
+  },600);
+})();
+
+/* ══════════════════════════════════════════════════════════════
+   WELCOME POPUP ENGINE
+══════════════════════════════════════════════════════════════ */
+(function(){
+  /* Pages of featured links */
+  var pages=[
+    [
+      {u:"https://nikshep.vercel.app/",     n:"Nikshep — Portfolio",  url:"nikshep.vercel.app",    i:"⚡"},
+      {u:"https://rupeerewind.vercel.app/", n:"RupeeRewind",          url:"rupeerewind.vercel.app",i:"💸"},
+      {u:"https://kairosflow.vercel.app/",  n:"KairosFlow",           url:"kairosflow.vercel.app", i:"⏱"},
+    ],
+    [
+      {u:"https://entropyzero.vercel.app/", n:"EntropyZero",          url:"entropyzero.vercel.app",i:"🌀"},
+      {u:"https://instagen-hyperdesi.vercel.app/",n:"InstaGen",       url:"instagen-hyperdesi.vercel.app",i:"✍️"},
+      {u:"https://chailink.vercel.app/",    n:"ChaiLink",             url:"chailink.vercel.app",   i:"🔗"},
+    ],
+    [
+      {u:"http://roastgram.gamer.gd/",      n:"RoastGram",            url:"roastgram.gamer.gd",    i:"🔥"},
+      {u:"http://backyarddevs.xo.je/",      n:"Backyard Devs",        url:"backyarddevs.xo.je",    i:"🏡"},
+      {u:"http://copiumai.xo.je/",          n:"CopiumAI",             url:"copiumai.xo.je",        i:"🤖"},
+    ]
+  ];
+  var curPage=0;
+
+  var popup=document.getElementById('welcome-popup');
+  if(!popup) return;
+
+  function renderPage(idx){
+    var linksEl=document.getElementById('wp-links');
+    if(!linksEl) return;
+    linksEl.style.opacity='0';
+    linksEl.style.transform='translateX(10px)';
+    setTimeout(function(){
+      linksEl.innerHTML='';
+      pages[idx].forEach(function(p){
+        var a=document.createElement('a');
+        a.className='wp-link';
+        a.href=p.u; a.target='_blank'; a.rel='noopener';
+        a.innerHTML=
+          '<span class="wp-link-ico">'+p.i+'</span>'+
+          '<span class="wp-link-info">'+
+            '<span class="wp-link-name">'+p.n+'</span>'+
+            '<span class="wp-link-url">'+p.url+'</span>'+
+          '</span>'+
+          '<span class="wp-link-arr">→</span>';
+        linksEl.appendChild(a);
+      });
+      /* dots */
+      for(var d=0;d<3;d++){
+        var dot=document.getElementById('wpd'+d);
+        if(dot) dot.classList.toggle('on',d===idx);
+      }
+      /* button label */
+      var btn=document.getElementById('wp-next');
+      if(btn) btn.textContent=idx<pages.length-1?'See more →':'Browse all ↑';
+      linksEl.style.transition='opacity .22s ease,transform .22s ease';
+      linksEl.style.opacity='1';
+      linksEl.style.transform='translateX(0)';
+    },160);
+  }
+
+  function dismiss(){
+    popup.classList.add('closing');
+    setTimeout(function(){popup.style.display='none'},320);
+    try{sessionStorage.setItem('wp_dismissed','1')}catch(e){}
+  }
+
+  /* Don't show if already dismissed this session */
+  try{if(sessionStorage.getItem('wp_dismissed')==='1'){popup.style.display='none';return;}}catch(e){}
+
+  document.getElementById('wp-close').addEventListener('click',dismiss);
+  popup.addEventListener('click',function(e){
+    if(e.target.closest('.wp-link')) dismiss();
+  });
+
+  var nextBtn=document.getElementById('wp-next');
+  if(nextBtn){
+    nextBtn.addEventListener('click',function(){
+      if(curPage<pages.length-1){
+        curPage++;
+        renderPage(curPage);
+      } else {
+        /* Scroll to projects and dismiss */
+        var first=document.querySelector('.section');
+        if(first) first.scrollIntoView({behavior:'smooth',block:'start'});
+        dismiss();
+      }
+    });
+  }
+
+  /* Auto-dismiss after 18s */
+  var autoDismiss=setTimeout(dismiss,18000);
+  popup.addEventListener('mouseenter',function(){clearTimeout(autoDismiss)});
+})();
+
+
 /* Live preview trigger */
 document.addEventListener("click",function(e){
   var t=e.target.closest("#live-trigger");
@@ -887,6 +1813,80 @@ notice.innerHTML='Screenshots via <a href="https://microlink.io" target="_blank"
 document.querySelector(".section").parentNode.insertBefore(notice,document.querySelector(".section"));
 
 </script>
+
+
+<!-- ══════════════════════════════════════════════
+     WELCOME POPUP
+══════════════════════════════════════════════ -->
+<div id="welcome-popup" role="dialog" aria-label="Welcome">
+  <div class="wp-head">
+    <div class="wp-avatar">⚡</div>
+    <button class="wp-close" id="wp-close" aria-label="Dismiss">&#x2715;</button>
+  </div>
+  <p class="wp-title">Hey, don't just scroll — explore 👆</p>
+  <p class="wp-body">Each card is a <strong>real, live project</strong>. Click any one to open it.<br>Start with these:</p>
+  <div class="wp-links" id="wp-links">
+    <a class="wp-link" href="https://nikshep.vercel.app/" target="_blank" rel="noopener">
+      <span class="wp-link-ico">⚡</span>
+      <span class="wp-link-info">
+        <span class="wp-link-name">Nikshep — Portfolio</span>
+        <span class="wp-link-url">nikshep.vercel.app</span>
+      </span>
+      <span class="wp-link-arr">→</span>
+    </a>
+    <a class="wp-link" href="https://rupeerewind.vercel.app/" target="_blank" rel="noopener">
+      <span class="wp-link-ico">💸</span>
+      <span class="wp-link-info">
+        <span class="wp-link-name">RupeeRewind</span>
+        <span class="wp-link-url">rupeerewind.vercel.app</span>
+      </span>
+      <span class="wp-link-arr">→</span>
+    </a>
+    <a class="wp-link" href="https://kairosflow.vercel.app/" target="_blank" rel="noopener">
+      <span class="wp-link-ico">⏱</span>
+      <span class="wp-link-info">
+        <span class="wp-link-name">KairosFlow</span>
+        <span class="wp-link-url">kairosflow.vercel.app</span>
+      </span>
+      <span class="wp-link-arr">→</span>
+    </a>
+  </div>
+  <div class="wp-footer">
+    <div class="wp-dots">
+      <span class="wp-dot on" id="wpd0"></span>
+      <span class="wp-dot" id="wpd1"></span>
+      <span class="wp-dot" id="wpd2"></span>
+    </div>
+    <button class="wp-cta" id="wp-next">See more →</button>
+  </div>
+</div>
+
+<!-- ── Tinder Overlay ─────────────────────────── -->
+<div id="tinder-overlay" role="dialog" aria-modal="true" aria-label="Swipe mode">
+  <div class="tinder-header">
+    <span class="tinder-title">✦ Swipe Mode</span>
+    <span class="tinder-prog" id="tinder-prog">1 / 19</span>
+    <button class="tinder-close" id="tinder-close">&#x2715;</button>
+  </div>
+  <div class="tinder-stage" id="tinder-stage">
+    <!-- Cards injected by JS -->
+  </div>
+  <div class="tinder-hints">
+    <span class="th-hint"><span class="th-key">←</span> Skip</span>
+    <span class="th-hint"><span class="th-key">→</span> Open</span>
+    <span class="th-hint"><span class="th-key">Esc</span> Exit</span>
+    <span class="th-hint"><span style="font-size:16px">👆</span> Swipe</span>
+  </div>
+</div>
+
+<!-- Tinder launch button -->
+<button id="tinder-btn" aria-label="Enter swipe mode">
+  <span class="tb-ico">✦</span> Explore Mode
+</button>
+
+<!-- ── Firework canvas + toast ───────────────── -->
+<canvas id="egg-canvas" aria-hidden="true"></canvas>
+<div class="egg-toast" id="egg-toast">🎉 You found the easter egg, nikkk!</div>
 
 <!-- ── Live Preview Modal ────────────────────────────── -->
 <div id="live-modal" role="dialog" aria-modal="true" aria-label="Live preview">
